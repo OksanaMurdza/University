@@ -1,0 +1,18 @@
+import 'react-hot-loader/patch';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Main from './Containers/Main/';
+
+
+const rootEl = document.getElementById('root');
+
+ReactDOM.render(
+	<Main/>,
+	rootEl
+);
+
+if (module.hot) {
+	module.hot.accept('./Containers/Main', () => {
+		render(Login)
+	});
+}
