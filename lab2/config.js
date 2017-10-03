@@ -18,20 +18,20 @@
 // };
 
 // FOR DEVELOPMENT
-// module.exports = {
-//     server : {
-//         ip: localhost,
-//         port : 8000
-//     },
-//     db:{
-//         user: 'postgres',
-//         database: 'geocollector',
-//         password: 'postgres',
-//         host: '192.168.30.124',
-//         port: 5432,
-//         max: 20, //set pool max size to 20
-//         min: 10, //set min pool size to 4
-//         idleTimeoutMillis: 30000 ,
-//         application_name: 'gisportal'
-//     },
-// };
+module.exports = {
+    server : {
+        ip: 'localhost',
+        port : 3000
+    },
+    db:{
+        user: 'postgres',
+        database: 'lab2',
+        password: 'zxc123',
+        host: 'localhost',
+        port: 5432,
+        max: 20, //set pool max size to 20
+        min: 10, //set min pool size to 4
+        idleTimeoutMillis: 30000 ,
+        application_name: 'gisportal'
+    },
+};

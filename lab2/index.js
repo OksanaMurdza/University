@@ -48,7 +48,7 @@ app.get('*', (req , res) => {
 
 //move to config
 app.listen(port);
-console.log('nodejs backend is startup on port '+port+'!');
+console.log('nodejs backend is startup on port ' + port + '!');
 
 //include api
 // app.get('/api/reg', () => {
