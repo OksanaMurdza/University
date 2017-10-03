@@ -26,8 +26,6 @@
  *      3)Вместимость
  */
 
-
-
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 import { withRouter, Link } from 'react-router-dom'
@@ -41,66 +39,56 @@ import './style.scss'
 
 class GeneratorFile extends Component {
     
-    constructor(props) {
-        super(props);
+    handleChange(e) {
+        const { select_value } = this.props.GeneratorActions;
         
-        this.state = {
-            value: 0,
-            options: ['Аэропорт','Рейс','Самолёт'],
-            second_options: [
-                ['ID', 'Название', 'Город'],
-                ['ID перевозчика','Год основания','Название'],
-                ['ID','Модель','Вместимость']
-            ],
-            allData: '',
-            arr: []
-        }
-    }
-    
-    handleChange(event) {
-        this.setState({value: event.target.value});
+        select_value(e.target.value);
     }
   
   
     
     takeInputData() {
-        let currentOption = this.state.options[this.state.value];
+        const { value, options, second_options, data} = this.props.generator;
+        const { save_data, make_link } = this.props.GeneratorActions;
+        
+        let currentOption = options[value];
         let buff = {};
         let newData;
     
-        
-        this.state.second_options[this.state.value].map((item) => {
-            let value = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
-            buff[`${item}`] = value;
+        second_options[value].map((item) => {
+            buff[`${item}`] = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
+            ReactDOM.findDOMNode(this.refs[`${item}`]).value = '';
         });
 
         
-        if (this.state.arr.length === 0) {
+        if (data.length === 0) {
             newData = {[`${currentOption}`]: []};
         }
         else {
-            newData = this.state.arr;
-            !this.state.arr[`${currentOption}`] ? newData[[`${currentOption}`]] = [] : null;
+            newData = data;
+            !data[`${currentOption}`] ? newData[[`${currentOption}`]] = [] : null;
         }
         
         newData[`${currentOption}`].push(buff);
         let  newOption =  'data:' + "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(newData));
     
-        this.setState({allData: newOption, arr: newData}, () => {});
-    
+        save_data(newData);
+        make_link(newOption);
     }
     
     
     
     render() {
-        const inputItem = this.state.second_options[this.state.value];
+        const { options, second_options, value, link } = this.props.generator;
+        const inputItem = second_options[value];
+        
         return (
             <div className="Login__wrapper">
                 <h3>Генерация файла для загрузки в базу данных</h3>
                 <span>Выберите "измерение":</span>
-                        <select value={this.state.value} onChange={::this.handleChange}>
+                        <select value={value} onChange={::this.handleChange}>
                             {
-                                this.state.options.map((item, index) => {
+                                options.map((item, index) => {
                                     return <option value={index} key={index}>{item}</option>
                                 })
                             }
@@ -117,7 +105,7 @@ class GeneratorFile extends Component {
                             })
                         }
                     <button onClick={::this.takeInputData}>press</button>
-                <a href={this.state.allData} download="data.json">download</a>
+                <a href={link} download="data.json">download</a>
             </div>
         )
     }
@@ -137,11 +125,11 @@ class GeneratorFile extends Component {
     /**
         * @default - default give access to common action
         * @param dispatch
-        * @returns {{AuthActions: (ActionCreator<any> | ActionCreatorsMapObject)}}
+        * @returns {{GeneratorActions: (ActionCreator<any> | ActionCreatorsMapObject)}}
      */
     function mapDispatchToProps(dispatch) {
     return {
-        AuthActions: bindActionCreators(GeneratorActions, dispatch)
+        GeneratorActions: bindActionCreators(GeneratorActions, dispatch)
     }
 }
 
