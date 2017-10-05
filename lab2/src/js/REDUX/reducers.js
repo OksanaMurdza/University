@@ -4,7 +4,8 @@ import { routerReducer } from 'react-router-redux';
 
 //include reducers
 import generator from './ducks/GeneratorActions';
-// import map from './ducks/map';
+import view from './ducks/ViewActions';
+
 
 // Initial routing state
 const routeInitialState = {
@@ -33,6 +34,7 @@ export default function createReducer() {
 		routeReducer,
 		routerReducer,
         generator,
+		view
         // map
 	})
 }

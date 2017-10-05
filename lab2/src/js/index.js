@@ -23,8 +23,8 @@ ReactDOM.render(
 		<ConnectedRouter history={history}>
 			<div>
 				<Switch>
-                    <Route path="/" exact component={generator}/>
-					<Route path="/view" exact component={view}/>
+					<Route path="/" exact component={view}/>
+                    <Route path="/generator" exact component={generator}/>
 					{/*<Route path="/reg" component={Registration}/>*/}
                     {/*<Route path="/map" component={MapContainer}/>*/}
 				</Switch>

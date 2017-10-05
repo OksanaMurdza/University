@@ -1,7 +1,7 @@
 const express     = require('express'),
       pgdb        = require('../libs/pgdb')(),
       bodyParser  = require('body-parser'),
-      compression = require('compression'),
+      multer      = require('multer')(),
 
 router = express.Router();
 
@@ -30,4 +30,15 @@ router.post('/generator', (req, res) => {
         })
         .catch((err) => res.status(500).end())
 });
+
+
+
+router.post('/upload', multer.single('file'), (req, res) => {
+    let dataFile = req.file.buffer.toString();
+    res.json({
+        dataFile
+    })
+});
+
+
 module.exports = router;

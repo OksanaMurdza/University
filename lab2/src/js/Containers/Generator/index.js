@@ -71,7 +71,7 @@ class GeneratorFile extends Component {
         
         newData[`${currentOption}`].push(buff);
         let  newOption =  'data:' + "text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(newData));
-    
+        
         save_data(newData);
         make_link(newOption);
     }
@@ -84,6 +84,9 @@ class GeneratorFile extends Component {
         
         return (
             <div className="Login__wrapper">
+                <button>
+                    <Link to="/">Перейти к просмотру измерений</Link>
+                </button>
                 <h3>Генерация файла для загрузки в базу данных</h3>
                 <span>Выберите "измерение":</span>
                         <select value={value} onChange={::this.handleChange}>
