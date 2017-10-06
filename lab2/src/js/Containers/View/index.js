@@ -168,11 +168,10 @@ class View extends Component {
         const characteristic = second_options[value];
     
         return (
-            <div>
-                 <button>
-                     <Link to="/generator">Перейти к генерации JSON файла</Link>
+            <div id="ViewContainer">
+                 <button id="nextRoute">
+                     <Link id="Link" to="/generator">Перейти к генерации JSON файла</Link>
                  </button>
-                <h3>Выберете то, что нужное отобразить </h3>
                 <br/>
                 <span>Выберите "измерение":</span>
                 <select value={value} onChange={::this.handleChange}>
@@ -198,12 +197,12 @@ class View extends Component {
                     })
                 }
     
-                <div>
+                <div id="newData">
                     <input id='file-input' type='file' accept='.json'
                            onChange={::this.uploadFile}
                     />
                     <div>
-                        <button onClick={::this.saveToDataBase}>Загрузить JSON данные</button>
+                        <button id="save" onClick={::this.saveToDataBase}>Загрузить JSON данные</button>
                     </div>
                 </div>
                 {drawData}
