@@ -40,6 +40,11 @@ import './style.scss'
 
 class View extends Component {
     
+    /**
+     * @desc: select in dropdown
+     * @param: e
+     * @redux: save data to --> value
+     */
     handleChange(e) {
         ::this.takeData(e.target.value);
         
@@ -47,10 +52,18 @@ class View extends Component {
         select_value(e.target.value);
     }
     
+    /**
+     * @desc: default request to dataBase and save first option select
+     */
     componentWillMount() {
         ::this.takeData(0)
     }
     
+    /**
+     * @desc: request to dataBase and save REDUX
+     * @param: value - table name
+     * @redux: save data to --> request_data
+     */
     takeData(value) {
         const { request_data } = this.props.ViewActions;
         
@@ -116,12 +129,9 @@ class View extends Component {
     
     
     saveToDataBase() {
-        console.log('asd >>>>');
         const { value } = this.props.generator;
     
-    
         // clear dataBase
-        //
         for (let i = 0; i < 3; i++) {
             fetch(`http://192.168.1.103:3000/api/delete?requestValue=${i}`, {
                 method: 'POST',
@@ -133,12 +143,9 @@ class View extends Component {
                 .catch((err) => console.log(err));
         }
 
-          // upload new data to dataBase
-       
-        
+        // upload new data to dataBase
         let data = this.props.view.dataFromFile;
         let keys = Object.keys(data);
-        // requestValue=${keys[index]}&data=${JSON.stringify(item)}
         Object.values(data).map((item, index) => {
             fetch(`http://192.168.1.103:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
                     method: 'POST',

@@ -30,7 +30,9 @@ router.post('/generator', (req, res) => {
         .catch((err) => res.status(500).end())
 });
 
-
+/**
+ * @desc: upload file to server and send to client
+ */
 router.post('/upload', multer.single('file'), (req, res) => {
     let dataFile = req.file.buffer.toString();
     res.json({
@@ -38,7 +40,11 @@ router.post('/upload', multer.single('file'), (req, res) => {
     })
 });
 
-
+/**
+ * @desc: delete all data in table
+ * @param:
+ *        requestValue - name table
+ */
 router.post('/delete', (req, res) => {
     const reqParam = req.param('requestValue');
     let reqString;
@@ -56,7 +62,13 @@ router.post('/delete', (req, res) => {
         .catch((err) => res.status(500).end())
 });
 
-
+/**
+ * @desc: save data to dataBase
+ * @param:
+ *        reqParam - table name
+ *        keys - column name
+ *        dataFile - JSON data
+ */
 router.post('/uploadFileData', (req, res) => {
     const reqParam = req.param('requestValue');
     let dataFile = JSON.parse(req.param('data'));
