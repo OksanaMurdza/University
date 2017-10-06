@@ -35,11 +35,11 @@ const initialState = {
     modalType: '',
     
     value: 0,
-    options: ['Аэропорт','Перевозчик','Самолёт'],
+    options: ['airport','carrier','plane'],
     second_options: [
-        ['ID', 'Название', 'Город'],
-        ['ID перевозчика','Год основания','Название'],
-        ['ID','Модель','Вместимость']
+        ['name', 'id', 'city'],
+        ['name','foundation','id'],
+        ['id','model','capacity']
     ],
     link: '',
     data: []

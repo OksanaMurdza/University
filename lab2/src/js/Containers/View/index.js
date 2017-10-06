@@ -56,8 +56,7 @@ class View extends Component {
         
         fetch(`http://192.168.1.103:3000/api/generator?requestValue=${value}`, {
                 method: 'POST',
-            }
-        )
+            })
             .then(d => d.json())
             .then(d => {
                 request_data(d.data)
@@ -117,7 +116,41 @@ class View extends Component {
     
     
     saveToDataBase() {
-        console.log('saveToDataBase');
+        console.log('asd >>>>');
+        const { value } = this.props.generator;
+    
+    
+        // clear dataBase
+        //
+        for (let i = 0; i < 3; i++) {
+            fetch(`http://192.168.1.103:3000/api/delete?requestValue=${i}`, {
+                method: 'POST',
+            })
+                .then(d => d.json())
+                .then(d => {
+                    ::this.takeData(i)
+                })
+                .catch((err) => console.log(err));
+        }
+
+          // upload new data to dataBase
+       
+        
+        let data = this.props.view.dataFromFile;
+        let keys = Object.keys(data);
+        // requestValue=${keys[index]}&data=${JSON.stringify(item)}
+        Object.values(data).map((item, index) => {
+            fetch(`http://192.168.1.103:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
+                    method: 'POST',
+                })
+                    .then(d => d.json())
+                    .then(d => {
+                        ::this.takeData(value)
+                    })
+                    .catch((err) => console.log(err));
+        });
+        
+    
     }
     
     
@@ -133,6 +166,7 @@ class View extends Component {
                      <Link to="/generator">Перейти к генерации JSON файла</Link>
                  </button>
                 <h3>Выберете то, что нужное отобразить </h3>
+                <br/>
                 <span>Выберите "измерение":</span>
                 <select value={value} onChange={::this.handleChange}>
                     {
