@@ -40,6 +40,14 @@ import './style.scss'
 
 class View extends Component {
     
+    constructor(props) {
+        super(props);
+        
+        this.state = {
+            editItem: ''
+        }
+    }
+    
     /**
      * @desc: select in dropdown
      * @param: e
@@ -67,7 +75,7 @@ class View extends Component {
     takeData(value) {
         const { request_data } = this.props.ViewActions;
         
-        fetch(`http://192.168.1.103:3000/api/generator?requestValue=${value}`, {
+        fetch(`http://192.168.1.100:3000/api/generator?requestValue=${value}`, {
                 method: 'POST',
             })
             .then(d => d.json())
@@ -89,7 +97,7 @@ class View extends Component {
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
         
-        fetch('http://192.168.1.103:3000/api/upload', {
+        fetch('http://192.168.1.100:3000/api/upload', {
             method: 'POST',
             body: formData,
         })
@@ -133,7 +141,7 @@ class View extends Component {
     
         // clear dataBase
         for (let i = 0; i < 3; i++) {
-            fetch(`http://192.168.1.103:3000/api/delete?requestValue=${i}`, {
+            fetch(`http://192.168.1.100:3000/api/delete?requestValue=${i}`, {
                 method: 'POST',
             })
                 .then(d => d.json())
@@ -147,7 +155,7 @@ class View extends Component {
         let data = this.props.view.dataFromFile;
         let keys = Object.keys(data);
         Object.values(data).map((item, index) => {
-            fetch(`http://192.168.1.103:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
+            fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
                     method: 'POST',
                 })
                     .then(d => d.json())
@@ -156,12 +164,70 @@ class View extends Component {
                     })
                     .catch((err) => console.log(err));
         });
-        
+    }
     
+    edit(e) {
+        console.log('e >>>>', e.target.id);
+        
+        this.setState({
+            editItem: e.target.id
+        })
     }
     
     
+    delete(e) {
+        console.log('delete >>>>');
+        console.log('e.target >>>>', e.target);
+    }
+    
+    save() {
+        const { value, second_options } = this.props.generator;
+        const { request_data } = this.props.view;
+        const editItem = this.state.editItem;
 
+        let buff = {};
+        let newData = [];
+        let reqString = '';
+    
+            fetch(`http://192.168.1.100:3000/api/delete?requestValue=${value}`, {
+                method: 'POST',
+            })
+                .then(d => {
+                    // ::this.takeData(value)
+                })
+                .catch((err) => console.log(err));
+        
+        second_options[value].map((item) => {
+            buff[`${item}`] = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
+            ReactDOM.findDOMNode(this.refs[`${item}`]).value = '';
+        });
+        
+        
+        console.log('editItem >>>>', editItem);
+        request_data.map((item, index) => {
+            if (index != editItem) {
+                newData.push(item)
+            } else {
+                newData.push(buff)
+            }
+        });
+    
+        
+        if (value == 0) {
+            reqString = 'airport';
+        } else if (value == 1) {
+            reqString = 'carrier'
+        } else {
+            reqString = 'plane'
+        }
+
+        fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${reqString}&data=${JSON.stringify(newData)}`, {
+            method: 'POST',
+        })
+            .then((d) => this.takeData(value))
+            .catch((err) => console.log(err));
+    }
+    
     render() {
         const { options, second_options, value } = this.props.generator;
         const { drawData, request_data } = this.props.view;
@@ -185,10 +251,12 @@ class View extends Component {
                 {
                     Object.values(request_data).map((item, index) => {
                         let buff = [];
+                        buff.push(<button id={index} onClick={::this.edit}>press to edit </button>);
+                        buff.push(<button id={index} onClick={::this.delete}>press to delete </button>);
                         Object.values(item).map((item, index) => {
                             buff.push (
                                 <div key = {index}>
-                                    {characteristic[index]}: {item}
+                                    <span id="colorField">{characteristic[index]}</span>: {item}
                                 </div>
                             )
                         });
@@ -197,6 +265,23 @@ class View extends Component {
                     })
                 }
     
+                <br/>
+                
+                {
+                    characteristic.map((item, index) => {
+                        // console.log('item >>>>', item);
+                        return(
+                            <div key={index}>
+                                {item}
+                                <input type="text"  ref={item}/>
+                            </div>
+                        )
+                    })
+                }
+                
+                <button onClick={::this.save}>save data</button>
+                
+                
                 <div id="newData">
                     <input id='file-input' type='file' accept='.json'
                            onChange={::this.uploadFile}

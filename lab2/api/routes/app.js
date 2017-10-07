@@ -30,11 +30,13 @@ router.post('/generator', (req, res) => {
         .catch((err) => res.status(500).end())
 });
 
+
 /**
  * @desc: upload file to server and send to client
  */
 router.post('/upload', multer.single('file'), (req, res) => {
     let dataFile = req.file.buffer.toString();
+    console.log('dataFile >>>>', dataFile);
     res.json({
         dataFile
     })
@@ -75,6 +77,7 @@ router.post('/uploadFileData', (req, res) => {
     let keys = Object.keys(dataFile[0]);
     let dataString = '';
     
+    console.log('dataFile >>>>', dataFile);
     Object.values(dataFile).map((item) => {
         dataString = '';
         keys.map((key, index) => {
@@ -83,6 +86,10 @@ router.post('/uploadFileData', (req, res) => {
                 dataString += ', ';
         });
     
+        console.log('reqParam >>>>', reqParam);
+        console.log('keys.join(', ') >>>>', keys.join(', '));
+        console.log('dataString >>>>', dataString);
+        
         pgdb.query(`insert into ${reqParam} (${keys.join(', ').toLowerCase()})
                     values (${dataString})`
         )

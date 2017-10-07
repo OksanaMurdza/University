@@ -2,7 +2,7 @@
 const REQUES_DATA = 'REQUES_DATA';
 const DATA_FROM_FILE = 'DATA_FROM_FILE';
 const VIEW_DATA = 'VIEW_DATA';
-
+const EDIT_ITEM = 'EDIT_ITEM';
 
 /*Actions*/
 
@@ -28,11 +28,19 @@ export function view_data( props ) {
     }
 }
 
+export function edit_item( props ) {
+    return {
+        type: EDIT_ITEM,
+        payload: props
+    }
+}
+
 /*Initial State*/
 const initialState = {
     request_data: [],
     dataFromFile: [],
-    drawData: 'Загрузите файл (.json)'
+    drawData: 'Загрузите файл (.json)',
+    editItem: ''
 };
 
 
@@ -49,6 +57,9 @@ export default function reducer(state = initialState, action) {
             
         case VIEW_DATA:
             return {...state, drawData: action.payload};
+            
+        case EDIT_ITEM:
+            return {...state, editItem: action.payload};
             
         default:
             return state;
