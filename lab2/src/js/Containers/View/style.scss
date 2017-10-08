@@ -21,6 +21,7 @@ html, body {
 
 #ViewContainer {
   //margin: 5%;
+  font-size: 20px;
   padding: 10%;
   border: 1px solid transparent;
   border-radius: 10px;
@@ -49,6 +50,7 @@ html, body {
       #Link {
         color: $mainColor;
       }
+
     }
 
     #Link {
@@ -58,6 +60,10 @@ html, body {
     }
   }
 
+  img {
+    height: 13px;
+    width: 21px;
+  }
 }
 
 
@@ -81,4 +87,28 @@ html, body {
 
 #second {
   padding-top: 20px;
+}
+
+
+.delete:hover {
+  background-color: red !important;
+  color: white !important;
+  transition: .2s;
+}
+
+.edit:hover {
+  background-color: #68A324 !important;
+  color: white !important;
+  transition: .2s;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 70%;
+}
+
+.hide {
+  display: none;
 }

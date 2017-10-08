@@ -167,43 +167,54 @@ class View extends Component {
     }
     
     edit(e) {
-        console.log('e >>>>', e.target.id);
-        
-        this.setState({
-            editItem: e.target.id
-        })
+        const { edit_item } = this.props.ViewActions;
+    
+        edit_item(e.target.id);
     }
     
     
     delete(e) {
-        console.log('delete >>>>');
-        console.log('e.target >>>>', e.target);
+        const { value, options } = this.props.generator;
+        const { request_data } = this.props.view;
+    
+        let newData = [];
+    
+        fetch(`http://192.168.1.100:3000/api/delete?requestValue=${value}`, {
+            method: 'POST',
+        })
+            .catch((err) => console.log(err));
+    
+    
+        request_data.map((item, index) => {
+            if (index != e.target.id)
+                newData.push(item)
+        });
+    
+        fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
+            method: 'POST',
+        })
+            // .then(() => this.update())
+            .catch((err) => console.log(err));
     }
     
     save() {
-        const { value, second_options } = this.props.generator;
-        const { request_data } = this.props.view;
-        const editItem = this.state.editItem;
-
+        const { value, second_options, options } = this.props.generator;
+        const { request_data, editItem } = this.props.view;
+        const { edit_item } = this.props.ViewActions;
+    
         let buff = {};
         let newData = [];
-        let reqString = '';
     
             fetch(`http://192.168.1.100:3000/api/delete?requestValue=${value}`, {
                 method: 'POST',
             })
-                .then(d => {
-                    // ::this.takeData(value)
-                })
                 .catch((err) => console.log(err));
         
         second_options[value].map((item) => {
             buff[`${item}`] = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
             ReactDOM.findDOMNode(this.refs[`${item}`]).value = '';
         });
-        
-        
-        console.log('editItem >>>>', editItem);
+
         request_data.map((item, index) => {
             if (index != editItem) {
                 newData.push(item)
@@ -211,26 +222,24 @@ class View extends Component {
                 newData.push(buff)
             }
         });
-    
-        
-        if (value == 0) {
-            reqString = 'airport';
-        } else if (value == 1) {
-            reqString = 'carrier'
-        } else {
-            reqString = 'plane'
-        }
 
-        fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${reqString}&data=${JSON.stringify(newData)}`, {
+
+        fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
             method: 'POST',
         })
-            .then((d) => this.takeData(value))
+            .then(() => edit_item(''))
             .catch((err) => console.log(err));
+    }
+    
+    update() {
+        const { value } = this.props.generator;
+    
+        this.takeData(value);
     }
     
     render() {
         const { options, second_options, value } = this.props.generator;
-        const { drawData, request_data } = this.props.view;
+        const { drawData, request_data, editItem } = this.props.view;
         const characteristic = second_options[value];
     
         return (
@@ -238,6 +247,9 @@ class View extends Component {
                  <button id="nextRoute">
                      <Link id="Link" to="/generator">Перейти к генерации JSON файла</Link>
                  </button>
+                <button onClick={::this.update}>
+                    <img src="../../../assets/img/loop.svg" alt="loop update"/>
+                </button>
                 <br/>
                 <span>Выберите "измерение":</span>
                 <select value={value} onChange={::this.handleChange}>
@@ -251,8 +263,8 @@ class View extends Component {
                 {
                     Object.values(request_data).map((item, index) => {
                         let buff = [];
-                        buff.push(<button id={index} onClick={::this.edit}>press to edit </button>);
-                        buff.push(<button id={index} onClick={::this.delete}>press to delete </button>);
+                        buff.push(<button id={index} className="edit" onClick={::this.edit}>press to edit </button>);
+                        buff.push(<button id={index} className="delete" onClick={::this.delete}>press to delete </button>);
                         Object.values(item).map((item, index) => {
                             buff.push (
                                 <div key = {index}>
@@ -267,17 +279,20 @@ class View extends Component {
     
                 <br/>
                 
-                {
-                    characteristic.map((item, index) => {
-                        // console.log('item >>>>', item);
-                        return(
-                            <div key={index}>
-                                {item}
-                                <input type="text"  ref={item}/>
-                            </div>
-                        )
-                    })
-                }
+                
+                   <div className={editItem != '' ? "input" : "hide"}>
+                       {
+                           characteristic.map((item, index) => {
+                               return(
+                                   <div key={index}>
+                                       {item}
+                                       <input type="text"  ref={item}/>
+                                   </div>
+                               )
+                           })
+                       }
+                   </div>
+                
                 
                 <button onClick={::this.save}>save data</button>
                 

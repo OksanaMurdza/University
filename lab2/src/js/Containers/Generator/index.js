@@ -45,8 +45,6 @@ class GeneratorFile extends Component {
         select_value(e.target.value);
     }
   
-  
-    
     takeInputData() {
         const { value, options, second_options, data} = this.props.generator;
         const { save_data, make_link } = this.props.GeneratorActions;

@@ -61,7 +61,7 @@ router.post('/delete', (req, res) => {
     
     pgdb.query(`delete from ${reqString}`)
         .then(() => res.json({status: 200}))
-        .catch((err) => res.status(500).end())
+        .catch((err) => res.status(500))
 });
 
 /**
