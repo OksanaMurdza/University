@@ -82,9 +82,12 @@ class GeneratorFile extends Component {
         
         return (
             <div id="GeneratorView">
-                <button id="nextRoute">
-                    <Link id="Link" to="/view">Перейти к просмотру измерений</Link>
-                </button>
+                <Link id="Link" to="/view">
+                    <button id="nextRoute">
+                        Перейти к просмотру измерений
+                    </button>
+                </Link>
+                
                 <h3>Генерация файла для загрузки в базу данных</h3>
                 <span>Выберите "измерение":</span>
                         <select value={value} onChange={::this.handleChange}>

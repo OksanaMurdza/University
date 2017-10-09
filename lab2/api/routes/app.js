@@ -13,13 +13,25 @@ router.post('/generator', (req, res) => {
     const reqParam = req.param('requestValue');
     let reqString;
     
-    if (reqParam == 0) {
-        reqString = 'airport';
-    } else if (reqParam == 1) {
-        reqString = 'carrier'
-    } else {
-        reqString = 'plane'
+    switch (+reqParam) {
+        case 0:
+            reqString = 'airport';
+            break;
+        case 1:
+            reqString = 'carrier';
+            break;
+        case 2:
+            reqString = 'plane';
+            break;
+        case 3:
+            reqString = 'facts';
+            break;
+
+        default:
+            return;
     }
+    
+    console.log('reqString >>>>', reqString);
     
     pgdb.query(`select * from ${reqString}`)
         .then(d => {
@@ -51,12 +63,22 @@ router.post('/delete', (req, res) => {
     const reqParam = req.param('requestValue');
     let reqString;
     
-    if (reqParam == 0) {
-        reqString = 'airport';
-    } else if (reqParam == 1) {
-        reqString = 'carrier'
-    } else {
-        reqString = 'plane'
+    switch (+reqParam) {
+        case 0:
+            reqString = 'airport';
+            break;
+        case 1:
+            reqString = 'carrier';
+            break;
+        case 2:
+            reqString = 'plane';
+            break;
+        case 3:
+            reqString = 'facts';
+            break;
+        
+        default:
+            return;
     }
     
     pgdb.query(`delete from ${reqString}`)
@@ -77,7 +99,8 @@ router.post('/uploadFileData', (req, res) => {
     let keys = Object.keys(dataFile[0]);
     let dataString = '';
     
-    console.log('dataFile >>>>', dataFile);
+   
+    
     Object.values(dataFile).map((item) => {
         dataString = '';
         keys.map((key, index) => {
@@ -85,10 +108,11 @@ router.post('/uploadFileData', (req, res) => {
             if (index !== keys.length - 1)
                 dataString += ', ';
         });
-    
-        console.log('reqParam >>>>', reqParam);
-        console.log('keys.join(', ') >>>>', keys.join(', '));
+        
+        console.log('dataFile >>>>', reqParam);
+        console.log('keys.join(, ) >>>>', keys.join(', '));
         console.log('dataString >>>>', dataString);
+        
         
         pgdb.query(`insert into ${reqParam} (${keys.join(', ').toLowerCase()})
                     values (${dataString})`

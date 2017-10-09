@@ -68,7 +68,7 @@ class View extends Component {
     takeData(value) {
         const { request_data } = this.props.ViewActions;
         
-        fetch(`http://192.168.1.100:3000/api/generator?requestValue=${value}`, {
+        fetch(`http://192.168.1.102:3000/api/generator?requestValue=${value}`, {
                 method: 'POST',
             })
             .then(d => d.json())
@@ -90,7 +90,7 @@ class View extends Component {
         const formData = new FormData();
         formData.append('file', e.target.files[0]);
         
-        fetch('http://192.168.1.100:3000/api/upload', {
+        fetch('http://192.168.1.102:3000/api/upload', {
             method: 'POST',
             body: formData,
         })
@@ -134,7 +134,7 @@ class View extends Component {
     
         // clear dataBase
         for (let i = 0; i < 3; i++) {
-            fetch(`http://192.168.1.100:3000/api/delete?requestValue=${i}`, {
+            fetch(`http://192.168.1.102:3000/api/delete?requestValue=${i}`, {
                 method: 'POST',
             })
                 .then(d => d.json())
@@ -148,7 +148,7 @@ class View extends Component {
         let data = this.props.view.dataFromFile;
         let keys = Object.keys(data);
         Object.values(data).map((item, index) => {
-            fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
+            fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
                     method: 'POST',
                 })
                     .then(d => d.json())
@@ -172,7 +172,7 @@ class View extends Component {
     
         let newData = [];
     
-        fetch(`http://192.168.1.100:3000/api/delete?requestValue=${value}`, {
+        fetch(`http://192.168.1.102:3000/api/delete?requestValue=${value}`, {
             method: 'POST',
         })
             .catch((err) => console.log(err));
@@ -183,7 +183,7 @@ class View extends Component {
                 newData.push(item)
         });
     
-        fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
+        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
             method: 'POST',
         })
             // .then(() => this.update())
@@ -198,7 +198,7 @@ class View extends Component {
         let buff = {};
         let newData = [];
     
-            fetch(`http://192.168.1.100:3000/api/delete?requestValue=${value}`, {
+            fetch(`http://192.168.1.102:3000/api/delete?requestValue=${value}`, {
                 method: 'POST',
             })
                 .catch((err) => console.log(err));
@@ -217,7 +217,7 @@ class View extends Component {
         });
 
 
-        fetch(`http://192.168.1.100:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
+        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
             method: 'POST',
         })
             .then(() => edit_item(''))
@@ -237,9 +237,12 @@ class View extends Component {
     
         return (
             <div id="ViewContainer">
-                 <button id="nextRoute">
-                     <Link id="Link" to="/generator">Перейти к генерации JSON файла</Link>
-                 </button>
+                <Link id="Link" to="/generator">
+                    <button id="nextRoute">
+                        Перейти к генерации JSON файла
+                    </button>
+                </Link>
+                
                 <br/>
                 <button id="nextRoute">
                     <Link id="Link" to="/">Перейти к просмотру фактов</Link>
