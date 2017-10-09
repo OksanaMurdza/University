@@ -81,9 +81,9 @@ class GeneratorFile extends Component {
         const inputItem = second_options[value];
         
         return (
-            <div className="Login__wrapper">
-                <button>
-                    <Link to="/">Перейти к просмотру измерений</Link>
+            <div id="GeneratorView">
+                <button id="nextRoute">
+                    <Link id="Link" to="/view">Перейти к просмотру измерений</Link>
                 </button>
                 <h3>Генерация файла для загрузки в базу данных</h3>
                 <span>Выберите "измерение":</span>
@@ -95,18 +95,26 @@ class GeneratorFile extends Component {
                             }
                         </select>
                 <br/>
-                        {
-                            inputItem.map((item, index) => {
-                                return(
-                                    <div key={index}>
-                                        {item}
-                                        <input type="text"  ref={item}/>
-                                    </div>
-                                )
-                            })
-                        }
-                    <button onClick={::this.takeInputData}>press</button>
-                <a href={link} download="data.json">download</a>
+    
+                <div className="input">
+                    {
+                        inputItem.map((item, index) => {
+                            return(
+                                <div key={index}>
+                                    {item}
+                                    <input type="text"  ref={item}/>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+                    <button onClick={::this.takeInputData}>save</button>
+                <a href={link} download="data.json">
+                    <div id="download">
+                        download
+                        <img src="../../../assets/img/cloud-computing.svg" alt="download"/>
+                    </div>
+                </a>
             </div>
         )
     }

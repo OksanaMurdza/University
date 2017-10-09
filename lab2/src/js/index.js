@@ -7,8 +7,12 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 
 import configureStore from './REDUX/store'
+
 import generator from './Containers/Generator/';
 import view from './Containers/View/';
+import facts from './Containers/Facts/';
+
+
 import '../scss/index.scss';
 import createHistory from 'history/createBrowserHistory';
 
@@ -23,10 +27,9 @@ ReactDOM.render(
 		<ConnectedRouter history={history}>
 			<div>
 				<Switch>
-					<Route path="/" exact component={view}/>
+					<Route path="/" exact component={facts}/>
+					<Route path="/view" exact component={view}/>
                     <Route path="/generator" exact component={generator}/>
-					{/*<Route path="/reg" component={Registration}/>*/}
-                    {/*<Route path="/map" component={MapContainer}/>*/}
 				</Switch>
 			</div>
 		</ConnectedRouter>

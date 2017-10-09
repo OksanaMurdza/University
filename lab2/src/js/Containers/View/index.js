@@ -40,13 +40,6 @@ import './style.scss'
 
 class View extends Component {
     
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            editItem: ''
-        }
-    }
     
     /**
      * @desc: select in dropdown
@@ -247,8 +240,9 @@ class View extends Component {
                  <button id="nextRoute">
                      <Link id="Link" to="/generator">Перейти к генерации JSON файла</Link>
                  </button>
-                <button onClick={::this.update}>
-                    <img src="../../../assets/img/loop.svg" alt="loop update"/>
+                <br/>
+                <button id="nextRoute">
+                    <Link id="Link" to="/">Перейти к просмотру фактов</Link>
                 </button>
                 <br/>
                 <span>Выберите "измерение":</span>
@@ -259,6 +253,10 @@ class View extends Component {
                         })
                     }
                 </select>
+                <br/>
+                <button onClick={::this.update}>
+                    <img src="../../../assets/img/loop.svg" alt="loop update"/>
+                </button>
                 <br/>
                 {
                     Object.values(request_data).map((item, index) => {
