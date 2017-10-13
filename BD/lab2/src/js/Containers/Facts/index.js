@@ -227,6 +227,8 @@ class View extends Component {
         const { input_panel } = this.props.FactsActions;
     
         input_panel(true);
+    
+        ::this.addNewFacts();
     }
     
     closeInputPanel() {
@@ -238,7 +240,7 @@ class View extends Component {
     
     addNewFacts() {
         const { facts_data } = this.props.facts;
-        const {take_facts_data} = this.props.FactsActions;
+        const { take_facts_data } = this.props.FactsActions;
     
         
         let keys = Object.keys(facts_data[0]);
@@ -303,7 +305,7 @@ class View extends Component {
                     <h3>edit section</h3>
                     {draw}
                 </div>
-                <div className={inputPanel ? '' : 'hide'}>
+                <div className={'hide'}>
                     <button onClick={::this.closeInputPanel}>
                         x
                     </button>
@@ -311,24 +313,24 @@ class View extends Component {
                         Object.values(facts_data).map((i, itter) => {
                             buff = [];
                             let keys = Object.keys(i);
-                            
+            
                             if (itter > 0)
                                 return;
-                            
+            
                             Object.values(i).map((item, index) => {
                                 buff.push(
-                                <input
-                                    key = {itterationKey++}
-                                    type = "text"
-                                    ref = {keys[index]}
-                                    placeholder={keys[index]}
-                                />);
+                                    <input
+                                        key={itterationKey++}
+                                        type="text"
+                                        ref={keys[index]}
+                                        placeholder={keys[index]}
+                                    />);
                             });
-
+            
                             return buff;
                         })
+                            // ::this.addNewFacts()
                     }
-                    
                     <button onClick={::this.addNewFacts}>save</button>
                 </div>
             </div>
