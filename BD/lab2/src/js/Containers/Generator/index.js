@@ -32,7 +32,6 @@ import { withRouter, Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions'
-import ModalWindow from '../../User interface/modal'
 
 import './style.scss'
 

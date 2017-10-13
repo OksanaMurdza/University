@@ -33,7 +33,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions'
 import * as ViewActions from '../../REDUX/ducks/ViewActions'
-import ModalWindow from '../../User interface/modal'
+import * as FactsActions from '../../REDUX/ducks/FactsActions'
 
 import './style.scss'
 
@@ -56,8 +56,12 @@ class View extends Component {
     /**
      * @desc: default request to dataBase and save first option select
      */
-    componentWillMount() {
+    componentDidMount() {
         ::this.takeData(0)
+    }
+    
+    componentWillMount() {
+        ::this.takeData(3)
     }
     
     /**
@@ -67,13 +71,18 @@ class View extends Component {
      */
     takeData(value) {
         const { request_data } = this.props.ViewActions;
-        
+        const { take_facts_data } = this.props.FactsActions;
+    
+    
         fetch(`http://192.168.1.102:3000/api/generator?requestValue=${value}`, {
                 method: 'POST',
             })
             .then(d => d.json())
             .then(d => {
-                request_data(d.data)
+                if (value === 3)
+                    take_facts_data(d.data);
+                else
+                    request_data(d.data);
             })
             .catch((err) => console.log(err))
     }
@@ -161,7 +170,7 @@ class View extends Component {
     
     edit(e) {
         const { edit_item } = this.props.ViewActions;
-    
+        
         edit_item(e.target.id);
     }
     
@@ -169,25 +178,49 @@ class View extends Component {
     delete(e) {
         const { value, options } = this.props.generator;
         const { request_data } = this.props.view;
+        const  requestData  = this.props.ViewActions.request_data;
+        const {facts_data} = this.props.facts;
     
         let newData = [];
+        let flag = true;
     
-        fetch(`http://192.168.1.102:3000/api/delete?requestValue=${value}`, {
-            method: 'POST',
-        })
-            .catch((err) => console.log(err));
-    
-    
-        request_data.map((item, index) => {
-            if (index != e.target.id)
-                newData.push(item)
+
+        Object.values(request_data[e.target.id]).map((item) => {
+            Object.values(item).map((reqData) => {
+                Object.values(facts_data).map((item) => {
+                    let key = Object.keys(item);
+                    Object.values(item).map((item, index) => {
+                        if (reqData == item && !!~key[index].indexOf('id')) {
+                            flag = false;
+
+                            console.error('Нельзя удалять это измерение :с')
+                        }
+                    })
+                });
+            })
         });
+
+        
+        if (flag) {
+            
+            fetch(`http://192.168.1.102:3000/api/delete?requestValue=${value}`, {
+                method: 'POST',
+            })
+                .catch((err) => console.log(err));
     
-        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
-            method: 'POST',
-        })
-            // .then(() => this.update())
-            .catch((err) => console.log(err));
+    
+            request_data.map((item, index) => {
+                if (index != e.target.id)
+                    newData.push(item)
+            });
+    
+            fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
+                method: 'POST',
+            })
+                .catch((err) => console.log(err));
+    
+            requestData(newData);
+        }
     }
     
     save() {
@@ -198,10 +231,10 @@ class View extends Component {
         let buff = {};
         let newData = [];
     
-            fetch(`http://192.168.1.102:3000/api/delete?requestValue=${value}`, {
-                method: 'POST',
-            })
-                .catch((err) => console.log(err));
+        fetch(`http://192.168.1.102:3000/api/delete?requestValue=${value}`, {
+            method: 'POST',
+        })
+            .catch((err) => console.log(err));
         
         second_options[value].map((item) => {
             buff[`${item}`] = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
@@ -228,6 +261,12 @@ class View extends Component {
         const { value } = this.props.generator;
     
         this.takeData(value);
+    }
+    
+    close() {
+        const { edit_item } = this.props.ViewActions;
+    
+        edit_item('');
     }
     
     render() {
@@ -282,6 +321,7 @@ class View extends Component {
                 
                 
                    <div className={editItem != '' ? "input" : "hide"}>
+                       <p  onClick={::this.close}>x</p>
                        {
                            characteristic.map((item, index) => {
                                return(
@@ -292,11 +332,8 @@ class View extends Component {
                                )
                            })
                        }
+                       <button id="saveNewData" onClick={::this.save}>save data</button>
                    </div>
-                
-                
-                <button onClick={::this.save}>save data</button>
-                
                 
                 <div id="newData">
                     <input id='file-input' type='file' accept='.json'
@@ -320,7 +357,8 @@ class View extends Component {
 function mapStateToProps(state) {
     return {
         generator: state.generator,
-        view: state.view
+        view: state.view,
+        facts: state.facts
     }
 }
 
@@ -332,7 +370,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         GeneratorActions: bindActionCreators(GeneratorActions, dispatch),
-        ViewActions: bindActionCreators(ViewActions, dispatch)
+        ViewActions: bindActionCreators(ViewActions, dispatch),
+        FactsActions: bindActionCreators(FactsActions, dispatch)
     }
 }
 

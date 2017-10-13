@@ -31,7 +31,7 @@ router.post('/generator', (req, res) => {
             return;
     }
     
-    console.log('reqString >>>>', reqString);
+    // console.log('reqString >>>>', reqString);
     
     pgdb.query(`select * from ${reqString}`)
         .then(d => {
@@ -48,7 +48,7 @@ router.post('/generator', (req, res) => {
  */
 router.post('/upload', multer.single('file'), (req, res) => {
     let dataFile = req.file.buffer.toString();
-    console.log('dataFile >>>>', dataFile);
+    // console.log('dataFile >>>>', dataFile);
     res.json({
         dataFile
     })
@@ -80,6 +80,8 @@ router.post('/delete', (req, res) => {
         default:
             return;
     }
+    
+    console.log('reqString delete >>>>', reqString);
     
     pgdb.query(`delete from ${reqString}`)
         .then(() => res.json({status: 200}))

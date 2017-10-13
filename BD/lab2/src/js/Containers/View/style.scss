@@ -69,11 +69,6 @@ html, body {
 
 #newData {
   margin-top: 10%;
-
-  #save {
-    margin-top: 20px;
-  }
-
 }
 
 #colorField {
@@ -87,6 +82,21 @@ html, body {
 
 #second {
   padding-top: 20px;
+}
+
+
+#saveNewData {
+  margin-top: 20px !important;
+}
+
+
+#close {
+  border: none !important;
+  transition: .2s;
+  &:hover {
+    color: red;
+    transition: .2s;
+  }
 }
 
 

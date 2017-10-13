@@ -27,40 +27,27 @@
  */
 
 import React, {Component} from 'react'
-import ReactDOM from 'react-dom'
 import {withRouter, Link} from 'react-router-dom'
+import ReactDOM from 'react-dom'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import ModalWindow from '../../User interface/modal'
 
 import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions'
 import * as ViewActions from '../../REDUX/ducks/ViewActions'
 import * as FactsActions from '../../REDUX/ducks/FactsActions'
 
 import './style.scss'
-import {request_data} from "../../REDUX/ducks/ViewActions";
 
 
 class View extends Component {
-    
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            editItem: 0,
-            draw: '',
-            newItem: ''
-        };
-        
-    }
     
     componentWillMount() {
         ::this.takeData()
     }
     
     takeData() {
-        const {take_facts_data} = this.props.FactsActions;
-        const {request_data} = this.props.ViewActions;
+        const { take_facts_data } = this.props.FactsActions;
+         const { request_data } = this.props.ViewActions;
         
         let buff = [];
         for (let i = 0; i < 4; i++) {
@@ -104,11 +91,11 @@ class View extends Component {
     }
     
     handleChange(e) {
-        const {facts_data} = this.props.facts;
+        const {facts_data, editItem} = this.props.facts;
         const {take_facts_data} = this.props.FactsActions;
     
     
-        let currentItem = this.state.editItem;
+        let currentItem = editItem;
         let buff = [];
         let fieldName = e.target.id;
         let newValue = e.target.value;
@@ -128,8 +115,11 @@ class View extends Component {
     }
     
     edit(e) {
-        const {facts_data} = this.props.facts;
-        const {request_data} = this.props.view;
+        const { draw_facts, edit_item } = this.props.FactsActions;
+    
+        const { facts_data } = this.props.facts;
+        const { request_data } = this.props.view;
+       
         
         let itterationKey = 0;
         let keys = Object.keys(facts_data[e.target.id]);
@@ -141,7 +131,6 @@ class View extends Component {
             let keyReq = Object.values(request_data).map((i) => {
                 return Object.keys(i)
             });
-            
             buff.push(
                 <div key={itter + 1000}>
                     {keys[itter]}: {i}
@@ -181,27 +170,30 @@ class View extends Component {
         });
         
         draw.push(<button key={itterationKey++} onClick={::this.save}>save</button>);
-        
-        this.setState({
-            editItem: e.target.id,
-            draw: draw
-        })
+    
+    
+        draw_facts(draw);
+        edit_item(+e.target.id);
     }
     
     delete(e) {
-        console.log('e.target.id >>>>', e.target.id);
-    }
-    
-    
-    save() {
+        const {take_facts_data} = this.props.FactsActions;
         const {facts_data} = this.props.facts;
+        
+        const buff = facts_data.filter((item, index) => {
+            if (index != e.target.id)
+                return item
+        });
     
+        take_facts_data(buff);
+    
+        
         fetch(`http://192.168.1.102:3000/api/delete?requestValue=3`, {
             method: 'POST',
         })
             .catch((err) => console.log(err));
 
-        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(facts_data)}`, {
+        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(buff)}`, {
             method: 'POST',
         })
             .then(() => console.log('save >>>>'))
@@ -209,18 +201,84 @@ class View extends Component {
     }
     
     
-    render() {
+    save() {
         const {facts_data} = this.props.facts;
-        const editItem = this.state.editItem;
+        
+        fetch(`http://192.168.1.102:3000/api/delete?requestValue=3`, {
+            method: 'POST',
+        })
+            .catch((err) => console.log(err));
+
+        
+        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(facts_data)}`, {
+            method: 'POST',
+        })
+            .then(() => console.log('save >>>>'))
+            .catch((err) => console.log(err));
+    }
+    
+    close() {
+        const { edit_item } = this.props.FactsActions;
+    
+        edit_item(' ');
+    }
+    
+    openInputPanel() {
+        const { input_panel } = this.props.FactsActions;
+    
+        input_panel(true);
+    }
+    
+    closeInputPanel() {
+        const { input_panel } = this.props.FactsActions;
+    
+        input_panel(false);
+    }
+    
+    
+    addNewFacts() {
+        const { facts_data } = this.props.facts;
+        const {take_facts_data} = this.props.FactsActions;
+    
+        
+        let keys = Object.keys(facts_data[0]);
+        let buff = {};
+        
+        keys.map((item) => {
+            buff[`${item}`] = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
+            ReactDOM.findDOMNode(this.refs[`${item}`]).value = '';
+        });
+
+        
+        let newData = facts_data;
+        newData.push(buff);
+    
+        take_facts_data(newData);
+    
+        this.save();
+    }
+    
+    
+    render() {
+        const {facts_data, draw, editItem, inputPanel} = this.props.facts;
+    
         let buff = [];
         let itterationKey = 0;
-        // let kek = Object.values(facts_data)
-        
-        // console.log('kek >>>>', kek);
+
         
         return (
             <div id="FactsContainer">
-                <h5>FactsContainer</h5>
+                <button id="nextRoute">
+                    <Link id="Link" to="/view">Перейти к просмотру измерений</Link>
+                </button>
+                <br/>
+                <button onClick={::this.takeData}>
+                    <img src="../../../assets/img/loop.svg" alt="loop update"/>
+                </button>
+                
+                <button onClick={::this.openInputPanel}>
+                    <img src="../../../assets/img/plus.svg" alt="loop update"/>
+                </button>
                 {
                     Object.values(facts_data).map((i, itter) => {
                         buff = [];
@@ -231,15 +289,48 @@ class View extends Component {
                             itterationKey++;
                         });
                         
-                        buff.push(<button key={itterationKey++} id={itter} onClick={::this.edit}>edit</button>);
-                        buff.push(<button key={itterationKey++} id={itter} onClick={::this.delete}>delete</button>);
+                        buff.push(<button key={itterationKey++} className="edit" id={itter} onClick={::this.edit}>edit</button>);
+                        buff.push(<button key={itterationKey++} className="delete" id={itter} onClick={::this.delete}>delete</button>);
                         buff.push(<hr/>);
                         
                         return buff;
                     })
                 }
-                <h3>edit section</h3>
-                {this.state.draw}
+                <div className={editItem !== ' ' ? '' : 'hide'}>
+                    <button onClick={::this.close}>
+                        x
+                    </button>
+                    <h3>edit section</h3>
+                    {draw}
+                </div>
+                <div className={inputPanel ? '' : 'hide'}>
+                    <button onClick={::this.closeInputPanel}>
+                        x
+                    </button>
+                    {
+                        Object.values(facts_data).map((i, itter) => {
+                            buff = [];
+                            let keys = Object.keys(i);
+                            
+                            if (itter > 0)
+                                return;
+                            
+                            Object.values(i).map((item, index) => {
+                                buff.push(
+                                <input
+                                    key = {itterationKey++}
+                                    type = "text"
+                                    ref = {keys[index]}
+                                    placeholder={keys[index]}
+                                />);
+                            });
+
+                            return buff;
+                        })
+                    }
+                    
+                    <button onClick={::this.addNewFacts}>save</button>
+                </div>
             </div>
         )
     }
