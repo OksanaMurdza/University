@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 const prod = ~process.argv.indexOf('-p');
-console.log('__dirname >>', __dirname)
+console.log('__dirname >>', __dirname);
 
 const config = {
     
