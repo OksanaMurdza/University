@@ -283,9 +283,18 @@ class View extends Component {
                 </Link>
                 
                 <br/>
-                <button id="nextRoute">
-                    <Link id="Link" to="/">Перейти к просмотру фактов</Link>
-                </button>
+                <Link id="Link" to="/">
+                    <button id="nextRoute">
+                        Перейти к просмотру фактов
+                    </button>
+                </Link>
+                <br/>
+                <Link id="Link" to="/search">
+                    <button id="nextRoute">
+                        Перейти к поиску измерений
+                    </button>
+                </Link>
+                
                 <br/>
                 <span>Выберите "измерение":</span>
                 <select value={value} onChange={::this.handleChange}>

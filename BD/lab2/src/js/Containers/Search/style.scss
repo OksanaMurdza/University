@@ -1,0 +1,44 @@
+$mainColor: #36A6DC;
+
+#ViewContainer {
+  //margin: 5%;
+  font-size: 20px;
+  padding: 10%;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  width: 450px;
+  height: 100%;
+  background-color: $mainColor;
+  color: white;
+
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+
+  button {
+    color: white;
+    background-color: transparent;
+    border: 1px solid white;
+    padding: 10px;
+    border-radius: 4px;
+    transition: .2s;
+
+    &:hover{
+      background-color: white;
+      color: $mainColor;
+      transition: .2s;
+
+      #Link {
+        color: $mainColor;
+      }
+
+    }
+
+    #Link {
+      color: white;
+      text-decoration: none;
+      transition: .2s;
+    }
+  }
+
+}

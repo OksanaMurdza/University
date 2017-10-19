@@ -11,7 +11,7 @@ import configureStore from './REDUX/store'
 import generator from './Containers/Generator/';
 import view from './Containers/View/';
 import facts from './Containers/Facts/';
-
+import search from './Containers/Search/';
 
 import '../scss/index.scss';
 import createHistory from 'history/createBrowserHistory';
@@ -22,22 +22,23 @@ const history = createHistory();
 export const store = configureStore( history );   
 const rootEl = document.getElementById('root');
 
-ReactDOM.render(
-	<Provider store={store}>
-		<ConnectedRouter history={history}>
-			<div>
-				<Switch>
-					<Route path="/" exact component={facts}/>
-					<Route path="/view" exact component={view}/>
-                    <Route path="/generator" exact component={generator}/>
-				</Switch>
-			</div>
-		</ConnectedRouter>
-	</Provider>, rootEl
-);
-
 if (module.hot) {
-	module.hot.accept('./Containers/Generator', () => {
+    
+    ReactDOM.render(
+		<Provider store={store}>
+			<ConnectedRouter history={history}>
+				<div>
+					<Switch>
+						<Route path="/" exact component={facts}/>
+						<Route path="/view" exact component={view}/>
+						<Route path="/generator" exact component={generator}/>
+						<Route path="/search" exact component={search}/>
+					</Switch>
+				</div>
+			</ConnectedRouter>
+		</Provider>, rootEl
+    );
+    module.hot.accept('./Containers/Generator', () => {
 		render(generator)
 	});
 }
