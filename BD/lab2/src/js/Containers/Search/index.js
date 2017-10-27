@@ -4,14 +4,21 @@ import ReactDOM from 'react-dom'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
-import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions'
-import * as ViewActions from '../../REDUX/ducks/ViewActions'
-import * as FactsActions from '../../REDUX/ducks/FactsActions'
+import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions';
+import * as ViewActions from '../../REDUX/ducks/ViewActions';
+import * as FactsActions from '../../REDUX/ducks/FactsActions';
+import  * as SearchActions from '../../REDUX/ducks/SearchActions';
 
 import './style.scss'
 
 
 class Search extends Component {
+    
+    componentWillMount() {
+        this.takeData();
+    }
+    
+    
     takeData() {
         const { take_facts_data } = this.props.FactsActions;
         const { request_data } = this.props.ViewActions;
@@ -57,10 +64,36 @@ class Search extends Component {
         request_data(buff);
     }
     
-    componentWillMount() {
-        this.takeData();
+    takeInputData() {
+        const { value, second_options } = this.props.generator;
+        const { request_data } = this.props.view;
+        const { filter_data } = this.props.SearchActions;
+    
+        let buff = {};
+        
+        second_options[value].map((item) => {
+            buff[`${item}`] = ReactDOM.findDOMNode(this.refs[`${item}`]).value;
+            ReactDOM.findDOMNode(this.refs[`${item}`]).value = '';
+        });
+        
+        /* **** item search **** */
+        let item_keys = [];
+        let search_data = [];
+        
+        Object.values(request_data[value]).map((item) => {
+             Object.values(item).map((item) => {
+                item_keys = Object.keys(item);
+                 Object.values(item).map((i, index) => {
+                     if (i == buff[`${item_keys[index]}`])
+                         search_data.push(item);
+                 })
+            })
+        });
+        
+        filter_data(search_data);
     }
     
+   
     handleChange(e) {
         const { select_value } = this.props.GeneratorActions;
         
@@ -69,11 +102,19 @@ class Search extends Component {
     
     render() {
         const { options, second_options, value } = this.props.generator;
+        const { filter_data } = this.props.search;
         const inputItem = second_options[value];
-    
     
         return (
             <div id="ViewContainer">
+                <Link id="Link" to="/view">
+                    <button id="nextRoute">
+                        Перейти к просмотру измерений
+                    </button>
+                </Link>
+    
+                <br/>
+                
                 <span>Выберите "измерение":</span>
                 <select value={value} onChange={::this.handleChange}>
                     {
@@ -95,6 +136,21 @@ class Search extends Component {
                         })
                     }
                 </div>
+                <br/>
+                <button onClick={::this.takeInputData}> Search! </button>
+                <hr/>
+                {
+                    Object.values(filter_data).map((i) => {
+                        let buff_keys = Object.keys(i);
+                        let draw = Object.values(i).map((item, index) => {
+                            return (
+                                <div>{buff_keys[index]}:  {item}</div>
+                            )
+                        });
+                        draw.push(<hr/>);
+                        return draw
+                    })
+                }
             </div>
         )
     }
@@ -108,7 +164,8 @@ function mapStateToProps(state) {
     return {
         generator: state.generator,
         view: state.view,
-        facts: state.facts
+        facts: state.facts,
+        search: state.search
     }
 }
 
@@ -121,7 +178,8 @@ function mapDispatchToProps(dispatch) {
     return {
         GeneratorActions: bindActionCreators(GeneratorActions, dispatch),
         ViewActions: bindActionCreators(ViewActions, dispatch),
-        FactsActions: bindActionCreators(FactsActions, dispatch)
+        FactsActions: bindActionCreators(FactsActions, dispatch),
+        SearchActions: bindActionCreators(SearchActions, dispatch)
     }
 }
 

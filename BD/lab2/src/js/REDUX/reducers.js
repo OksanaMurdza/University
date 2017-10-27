@@ -6,6 +6,7 @@ import { routerReducer } from 'react-router-redux';
 import generator from './ducks/GeneratorActions';
 import view from './ducks/ViewActions';
 import facts from './ducks/FactsActions';
+import search from './ducks/SearchActions';
 
 // Initial routing state
 const routeInitialState = {
@@ -35,6 +36,7 @@ export default function createReducer() {
 		routerReducer,
         generator,
 		view,
-        facts
+        facts,
+		search
 	})
 }
