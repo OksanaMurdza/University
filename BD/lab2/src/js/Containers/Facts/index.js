@@ -1,36 +1,10 @@
-/***
- *  Рейс:
- *      1) ID аэропорта отправки
- *      2) ID аэропорта прилёта
- *      3) ID Самолёта
- *      4) ID перевозчика
- *      5) Статус
- *      6) Дата
- *
- *
- *  Аэропорт:
- *      1) Название
- *      2) ID
- *      3) Город
- *
- *
- *  Перевозчик:
- *      1) Название
- *      2) Год основания
- *      3) ID перевозчика
- *
- *
- *  Самолёт:
- *      1) ID
- *      2) Модель
- *      3)Вместимость
- */
 
 import React, {Component} from 'react'
 import {withRouter, Link} from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { local_ip } from "../../index";
 
 import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions'
 import * as ViewActions from '../../REDUX/ducks/ViewActions'
@@ -71,7 +45,7 @@ class Facts extends Component {
                     return;
             }
             
-            fetch(`http://192.168.1.102:3000/api/generator?requestValue=${i}`, {
+            fetch(`http://${local_ip}:3000/api/generator?requestValue=${i}`, {
                 method: 'POST',
             })
                 .then(d => d.json())
@@ -188,12 +162,12 @@ class Facts extends Component {
         take_facts_data(buff);
     
         
-        fetch(`http://192.168.1.102:3000/api/delete?requestValue=3`, {
+        fetch(`http://${local_ip}:3000/api/delete?requestValue=3`, {
             method: 'POST',
         })
             .catch((err) => console.log(err));
 
-        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(buff)}`, {
+        fetch(`http://${local_ip}:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(buff)}`, {
             method: 'POST',
         })
             .then(() => console.log('save >>>>'))
@@ -221,13 +195,13 @@ class Facts extends Component {
 
         
         if (flag) {
-            fetch(`http://192.168.1.102:3000/api/delete?requestValue=3`, {
+            fetch(`http://${local_ip}:3000/api/delete?requestValue=3`, {
                 method: 'POST',
             })
                 .catch((err) => console.log(err));
     
     
-            fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(facts_data)}`, {
+            fetch(`http://${local_ip}:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(facts_data)}`, {
                 method: 'POST',
             })
                 .then(() => console.log('save >>>>'))
@@ -287,7 +261,6 @@ class Facts extends Component {
         let buff = [];
         let itterationKey = 0;
 
-        
         return (
             <div id="FactsContainer">
                 <button id="nextRoute">

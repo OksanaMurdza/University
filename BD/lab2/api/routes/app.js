@@ -1,20 +1,12 @@
 const express = require('express'),
     pgdb = require('../libs/pgdb')(),
-    mysql = require ('mysql'),
     multer = require('multer')(),
-    bodyParser = require('body-parser')
+    bodyParser = require('body-parser');
     
     router = express.Router();
 
     router.use(bodyParser.json());
     router.use(bodyParser.urlencoded({extended: true}));
-
-    const con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "",
-        database: "lab2"
-    });
 
 
 router.post('/generator', (req, res) => {
@@ -39,21 +31,15 @@ router.post('/generator', (req, res) => {
             return;
     }
     
-    // pgdb.query(`select * from ${reqString}`)
-    //     .then(d => {
-    //         res.json({
-    //             data: d
-    //         })
-    //     })
-    //     .catch((err) => res.status(500).end())
-    
-    console.log('reqString >>>>', reqString);
-    con.query(`select * from ${reqString}`, function (err, result) {
-        if (err) throw err;
-        else res.json({
-            data: result
+    pgdb.query(`select * from ${reqString}`)
+        .then(d => {
+            res.json({
+                data: d
+            })
         })
-    });
+        .catch((err) => res.status(500).end())
+    
+    
     
 });
 

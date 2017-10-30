@@ -3,6 +3,7 @@ import {withRouter, Link} from 'react-router-dom'
 import ReactDOM from 'react-dom'
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import { local_ip } from "../../index";
 
 import * as GeneratorActions from '../../REDUX/ducks/GeneratorActions';
 import * as ViewActions from '../../REDUX/ducks/ViewActions';
@@ -45,7 +46,7 @@ class Search extends Component {
                     return;
             }
             
-            fetch(`http://192.168.1.102:3000/api/generator?requestValue=${i}`, {
+            fetch(`http://${local_ip}:3000/api/generator?requestValue=${i}`, {
                 method: 'POST',
             })
                 .then(d => d.json())
