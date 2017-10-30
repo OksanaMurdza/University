@@ -85,8 +85,9 @@ class Search extends Component {
              Object.values(item).map((item) => {
                 item_keys = Object.keys(item);
                  Object.values(item).map((i, index) => {
-                     if (i == buff[`${item_keys[index]}`])
+                     if (i == buff[`${item_keys[index]}`]) {
                          search_data.push(item);
+                     }
                  })
             })
         });
