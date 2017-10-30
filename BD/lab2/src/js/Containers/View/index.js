@@ -190,20 +190,18 @@ class View extends Component {
 
         Object.values(request_data[e.target.id]).map((reqData) => {
             console.log('reqData >>>>', reqData);
-            // Object.values(item).map(() => {
                 Object.values(facts_data).map((item, index) => {
                     let key = Object.keys(item);
     
                     Object.values(item).map((item, index) => {
-                        console.log('reqData == item >>>>', reqData,  item);
                         if (reqData == item && !!~key[index].indexOf('id')) {
                             flag = false;
 
-                            console.error('Нельзя удалять это измерение :с')
+                            console.error('Нельзя удалять это измерение :с');
+                            alert('Нельзя удалять это измерение :с');
                         }
                     })
                 });
-            // })
         });
 
         

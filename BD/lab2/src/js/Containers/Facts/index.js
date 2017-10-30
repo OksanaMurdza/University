@@ -207,7 +207,8 @@ class Facts extends Component {
                 .then(() => console.log('save >>>>'))
                 .catch((err) => console.log(err));
         } else {
-            console.error('Нельзя, чтобы самолёт участвовал в нескольких рейсах!')
+            console.error('Нельзя, чтобы самолёт участвовал в нескольких рейсах!');
+            alert('Нельзя, чтобы самолёт участвовал в нескольких рейсах!');
         }
     }
     
