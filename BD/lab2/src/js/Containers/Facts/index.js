@@ -71,7 +71,7 @@ class Facts extends Component {
                     return;
             }
             
-            fetch(`http://192.168.1.103:3000/api/generator?requestValue=${i}`, {
+            fetch(`http://192.168.1.102:3000/api/generator?requestValue=${i}`, {
                 method: 'POST',
             })
                 .then(d => d.json())
@@ -188,12 +188,12 @@ class Facts extends Component {
         take_facts_data(buff);
     
         
-        fetch(`http://192.168.1.103:3000/api/delete?requestValue=3`, {
+        fetch(`http://192.168.1.102:3000/api/delete?requestValue=3`, {
             method: 'POST',
         })
             .catch((err) => console.log(err));
 
-        fetch(`http://192.168.1.103:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(buff)}`, {
+        fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(buff)}`, {
             method: 'POST',
         })
             .then(() => console.log('save >>>>'))
@@ -221,13 +221,13 @@ class Facts extends Component {
 
         
         if (flag) {
-            fetch(`http://192.168.1.103:3000/api/delete?requestValue=3`, {
+            fetch(`http://192.168.1.102:3000/api/delete?requestValue=3`, {
                 method: 'POST',
             })
                 .catch((err) => console.log(err));
     
     
-            fetch(`http://192.168.1.103:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(facts_data)}`, {
+            fetch(`http://192.168.1.102:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(facts_data)}`, {
                 method: 'POST',
             })
                 .then(() => console.log('save >>>>'))
