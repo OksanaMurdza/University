@@ -154,6 +154,46 @@ class RasterizationAlgorithms:
         print("Wu:")
         print(t2-t1)
 
+    def Michner(self, x0, y0, radius):
+        t1=time.clock()
+        x = 0
+        y = radius
+        d = 3 - 2 * radius
+        points = []
+
+        while (x < y):
+            points.append([x0 + x, y0 + y])
+            points.append([x0 + y, y0 + x])
+            points.append([x0 + y, y0 - x])
+            points.append([x0 + x, y0 - y])
+            points.append([x0 - x, y0 - y])
+            points.append([x0 - y, y0 - x])
+            points.append([x0 - y, y0 + x])
+            points.append([x0 - x, y0 + y])
+            if (d < 0):
+                d = d + 4 * x + 6
+            else:
+                d = d + 4 * (x - y) + 10
+                y = y - 1
+            x = x + 1
+
+        if (x == y):
+            points.append([x0 + x, y0 + y])
+            points.append([x0 + y, y0 + x])
+            points.append([x0 + y, y0 - x])
+            points.append([x0 + x, y0 - y])
+            points.append([x0 - x, y0 - y])
+            points.append([x0 - y, y0 - x])
+            points.append([x0 - y, y0 + x])
+            points.append([x0 - x, y0 + y])
+
+
+        self.draw(points)
+        t2=time.clock()
+        print("Michner:")
+        print(t2-t1)
+
+
 
     def draw(self, coords):
         for point in coords:
@@ -164,7 +204,10 @@ class RasterizationAlgorithms:
     def clean(self):
         self.canvas.delete("graph")
 
+# Michnera 
     def callback(self, func_name):
+        if func_name == "Michner":
+            return lambda func_name=func_name: getattr(self, func_name)(85, 60, 15)
         if func_name == "elipse_Bresenham":
             return lambda func_name=func_name: getattr(self, func_name)(85, 60, 15, 5)
         if func_name != "circle_Bresenham":
@@ -182,21 +225,31 @@ class RasterizationAlgorithms:
 
     def __init__(self):
         window = Tk()
-        window.title("lab1 gk")
-        self.canvas = Canvas(window, width=WIDTH, height=HEIGHT, bg="white")
+        window.title("Misyachniy Igor KV - 51 lab1")
+        self.canvas = Canvas(window, width=WIDTH, height=HEIGHT, bg="light blue")
         self.canvas.pack(side = 'bottom')
         frame = Frame(window, bg="light blue")
         frame.pack(side = "left")
+
         dda_btn = Button(frame,         text="       DDA      ", command=self.callback("DDA"))
-        dda_btn.grid(row=1, column=1)
+        dda_btn.grid(row = 1, column = 1)
+
         bres_btn = Button(frame,        text="    Bresenham   ", command=self.callback("Bresenham"))
-        bres_btn.grid(row=1, column=3)
+        bres_btn.grid(row = 1, column = 3)
+
         wu_btn = Button(frame,          text="       Wu       ", command=self.callback("Wu"))
-        wu_btn.grid(row=1, column=6)
+        wu_btn.grid(row = 1, column = 6)
+
+        mi_btn = Button(frame,          text="      Michner       ", command=self.callback("Michner"))
+        mi_btn.grid(row = 1, column = 7)
+
         circle_bres_btn = Button(frame, text="Circle Bresenham", command=self.callback("circle_Bresenham"))
-        circle_bres_btn.grid(row=1, column=4)
+        circle_bres_btn.grid(row = 1, column = 4)
+
         clear_btn = Button(frame,       text="      Clear     ", command=self.clean)
-        clear_btn.grid(row=1, column=7)
+        clear_btn.grid(row = 1, column = 8)
+
+
         window.mainloop()
 
 if __name__ == "__main__":
