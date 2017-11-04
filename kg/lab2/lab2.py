@@ -10,7 +10,7 @@ class RasterizationAlgorithms:
         points = []
         t = 0.001
         while (t <= 1.0):
-            q1 = t * t * t * - 1 + t * t * 3 + t * (-3) + 1
+            q1 = t * t * t * (- 1) + t * t * 3 + t * (-3) + 1
             q2 = t * t * t * 3 + t * t * (-6) + t * 3
             q3 = t * t * t * (-3) + t * t * 3
             q4 = t * t * t
