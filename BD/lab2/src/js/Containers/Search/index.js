@@ -47,7 +47,7 @@ class Search extends Component {
             }
             
             fetch(`http://${local_ip}:3000/api/generator?requestValue=${i}`, {
-                method: 'POST',
+         method: 'POST',
             })
                 .then(d => d.json())
                 .then(d => {

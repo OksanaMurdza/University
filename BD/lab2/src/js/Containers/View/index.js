@@ -78,7 +78,7 @@ class View extends Component {
     
     
         fetch(`http://${local_ip}:3000/api/generator?requestValue=${value}`, {
-                method: 'POST',
+      method: 'POST',
             })
             .then(d => d.json())
             .then(d => {
@@ -103,6 +103,7 @@ class View extends Component {
         formData.append('file', e.target.files[0]);
         
         fetch(`http://${local_ip}:3000/api/upload`, {
+
             method: 'POST',
             body: formData,
         })
@@ -147,6 +148,7 @@ class View extends Component {
         // clear dataBase
         for (let i = 0; i < 3; i++) {
             fetch(`http://${local_ip}:3000/api/delete?requestValue=${i}`, {
+
                 method: 'POST',
             })
                 .then(d => d.json())
@@ -161,12 +163,13 @@ class View extends Component {
         let keys = Object.keys(data);
         Object.values(data).map((item, index) => {
             fetch(`http://${local_ip}:3000/api/uploadFileData?requestValue=${keys[index]}&data=${JSON.stringify(item)}`, {
+
                     method: 'POST',
                 })
                     .then(d => d.json())
-                    .then(d => {
-                        ::this.takeData(value)
-                    })
+                    // .then(d => {
+                    //     ::this.takeData(value)
+                    // })
                     .catch((err) => console.log(err));
         });
     }
@@ -208,6 +211,7 @@ class View extends Component {
         if (flag) {
             
             fetch(`http://${local_ip}:3000/api/delete?requestValue=${value}`, {
+
                 method: 'POST',
             })
                 .catch((err) => console.log(err));
@@ -218,7 +222,8 @@ class View extends Component {
                     newData.push(item)
             });
     
-            fetch(`http://${local_ip}:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
+
+            fetch(`http://192.168.1.101:3000/api/uploadFileData?requestValue=${options[value]}&data=${JSON.stringify(newData)}`, {
                 method: 'POST',
             })
                 .catch((err) => console.log(err));
@@ -236,6 +241,7 @@ class View extends Component {
         let newData = [];
     
         fetch(`http://${local_ip}:3000/api/delete?requestValue=${value}`, {
+
             method: 'POST',
         })
             .catch((err) => console.log(err));

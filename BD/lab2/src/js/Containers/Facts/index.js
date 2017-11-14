@@ -46,6 +46,7 @@ class Facts extends Component {
             }
             
             fetch(`http://${local_ip}:3000/api/generator?requestValue=${i}`, {
+
                 method: 'POST',
             })
                 .then(d => d.json())
@@ -168,6 +169,7 @@ class Facts extends Component {
             .catch((err) => console.log(err));
 
         fetch(`http://${local_ip}:3000/api/uploadFileData?requestValue=facts&data=${JSON.stringify(buff)}`, {
+
             method: 'POST',
         })
             .then(() => console.log('save >>>>'))
@@ -196,6 +198,7 @@ class Facts extends Component {
         
         if (flag) {
             fetch(`http://${local_ip}:3000/api/delete?requestValue=3`, {
+
                 method: 'POST',
             })
                 .catch((err) => console.log(err));

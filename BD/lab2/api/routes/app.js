@@ -38,7 +38,7 @@ router.post('/generator', (req, res) => {
             })
         })
         .catch((err) => res.status(500).end())
-    
+
     
     
 });
@@ -49,7 +49,6 @@ router.post('/generator', (req, res) => {
  */
 router.post('/upload', multer.single('file'), (req, res) => {
     let dataFile = req.file.buffer.toString();
-    // console.log('dataFile >>>>', dataFile);
     res.json({
         dataFile
     })
@@ -82,8 +81,6 @@ router.post('/delete', (req, res) => {
             return;
     }
     
-    console.log('reqString delete >>>>', reqString);
-    
     pgdb.query(`delete from ${reqString}`)
         .then(() => res.json({status: 200}))
         .catch((err) => res.status(500))
@@ -112,12 +109,13 @@ router.post('/uploadFileData', (req, res) => {
                 dataString += ', ';
         });
         
-        console.log('dataFile >>>>', reqParam);
-        console.log('keys.join(, ) >>>>', keys.join(', '));
-        console.log('dataString >>>>', dataString);
-        
-        
-        pgdb.query(`insert into ${reqParam} (${keys.join(', ').toLowerCase()})
+        // pgdb.query(`insert into ${reqParam} (${keys.join(', ').toLowerCase()})
+        //             values (${dataString})`
+        // )
+        //     .then(() => res.json({status: 200}))
+        //     .catch((err) => res.status(500).end())
+
+        con.query(`insert into ${reqParam} (${keys.join(', ').toLowerCase()})
                     values (${dataString})`
         )
             .then(() => res.json({status: 200}))
