@@ -1,0 +1,24 @@
+// COLOR PALETTE
+$mainColor: #36A6DC;
+
+html, body {
+  height: 100%;
+  width: 80%;
+}
+
+.hide {
+  display: none;
+}
+
+#MainView {
+  h4 {
+    text-align: center;
+    font-family: monospace sans-serif;
+    color: #2196f3;
+    font-size: 20px;
+
+  }
+  .addPanel {
+    width: 300px;
+  }
+}
