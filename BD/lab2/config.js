@@ -26,7 +26,8 @@ module.exports = {
     db:{
         user: 'postgres',
         database: 'lab2',
-        password: 'zxc123',
+        // password: 'zxc123',
+        password: '',
         host: 'localhost',
         port: 5432,
         max: 20, //set pool max size to 20
