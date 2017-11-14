@@ -19,7 +19,8 @@ import createHistory from 'history/createBrowserHistory';
 const history = createHistory();
 
 
-export const store = configureStore( history );   
+export const store = configureStore( history );
+export const local_ip = '192.168.1.101';
 const rootEl = document.getElementById('root');
 
 if (module.hot) {
