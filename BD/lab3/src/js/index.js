@@ -11,6 +11,7 @@ import configureStore from './REDUX/store'
 
 import main from './Containers/Main';
 
+
 import '../scss/index.scss';
 import createHistory from 'history/createBrowserHistory';
 
@@ -20,16 +21,22 @@ const history = createHistory();
 export const store = configureStore( history );   
 const rootEl = document.getElementById('root');
 
+const App = () => {
+	return (
+		<Switch>
+			<Route path="/" exact component={main}/>
+				</Switch>
+	)
+};
+
 if (module.hot) {
     
     ReactDOM.render(
 		<Provider store={store}>
 			<ConnectedRouter history={history}>
-					<Switch>
-						<MuiThemeProvider>
-							<Route path="/" exact component={main}/>
-						</MuiThemeProvider>
-					</Switch>
+				<MuiThemeProvider>
+					<App/>
+				</MuiThemeProvider>
 			</ConnectedRouter>
 		</Provider>, rootEl
     );

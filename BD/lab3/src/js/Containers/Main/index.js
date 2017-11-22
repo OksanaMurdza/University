@@ -36,7 +36,7 @@ import { RaisedButton, Paper, FloatingActionButton, SelectField, MenuItem, IconB
 
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Autorenew from 'material-ui/svg-icons/action/autorenew';
-
+import GetApp from 'material-ui/svg-icons/action/get-app';
 
 import './style.scss'
 
@@ -169,6 +169,10 @@ class Main extends Component {
         let ButtonStyle = tableChoiceItem === '' ? hideStyle : saveChange;
         return (
             <div id="MainView">
+
+                <Link id="Link" to="/generator">
+                    <GetApp/>
+                </Link>
 
                 <h4>Таблица фактов</h4>
 
