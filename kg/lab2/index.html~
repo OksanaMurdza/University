@@ -3,14 +3,11 @@
 <head>
     <meta charset="utf-8">
     <link id="page_favicon" href="img/favicon.ico" rel="icon" type="image/x-icon"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"/>
-    <meta name="Keywords" content="ГІС"/>
-    <meta name="Description" content="GIS Opendata - Геоколектор"/>
-    <title>GIS Opendata - Геоколектор</title>
-    <meta charset="UTF-8">
+    <title>lab 2</title>
 </head>
 <body>
-<div id="root"></div>
-<script src="./build/bundle.js"></script>
+	<canvas id="myCanvas" width="800" height="800"></canvas>
+	
+	<script src="script.js"></script>
 </body>
 </html>

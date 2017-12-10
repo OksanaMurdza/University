@@ -11,7 +11,7 @@ class RasterizationAlgorithms:
     }
 
     def DDA(self, x1, y1, x2, y2):
-        # Замер времени
+        # Замер времен
         t1 = time.clock()
 
         # Большее принимается за кл-во шагов L цикла растеризации
