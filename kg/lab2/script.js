@@ -11,38 +11,66 @@ class Bezier {
     this.y2 = y2;
     this.x3 = x3;
     this.y3 = y3;
-    this.AllPoint = [];
+    this.i = 0;
 
-    this.normalCurveBezier();
+    // this.normalCurveBezier();
   }
 
   normalCurveBezier() {
     let t = 0.001;
+    const AllPoint = [];
 
-    const { x0, x1, x2, x3, y0, y1, y2, y3, AllPoint } = this;
+    const { x0, x1, x2, x3, y0, y1, y2, y3 } = this;
 
     while (t <= 1) {
-      let q1 = t * t * t * -1 + t * t * 3 + t * -3 + 1;
-      let q2 = t * t * t * 3 + t * t * -6 + t * 3;
-      let q3 = t * t * t * -3 + t * t * 3;
-      let q4 = t * t * t;
+      let q1 = t ** 3 * -1 + t ** 2 * 3 + t * -3 + 1;
+      let q2 = t ** 3 * 3 + t ** 2 * -6 + t * 3;
+      let q3 = t ** 3 * -3 + t ** 2 * 3;
+      let q4 = t ** 3;
       let qx = q1 * x0 + q2 * x1 + q3 * x2 + q4 * x3;
       let qy = q1 * y0 + q2 * y1 + q3 * y2 + q4 * y3;
+
       t += 0.001;
 
       AllPoint.push({
         qx,
         qy
       });
-
-      this.drawPoint(AllPoint);
     }
+
+    this.drawPoint(AllPoint);
   }
 
-  drawPoint() {
+  Rotation() {
+    let t = 0.001;
+    const AllPoint = [];
+    let i = 1;
+    const { x0, x1, x2, x3, y0, y1, y2, y3 } = this;
+
+    while (t <= 1) {
+      let q1 = t ** 3 * -1 + t ** 2 * 3 + t * -3 + 1;
+      let q2 = t ** 3 * 3 + t ** 2 * -6 + t * 3;
+      let q3 = t ** 3 * -3 + t ** 2 * 3;
+      let q4 = t ** 3;
+      let qx = q1 * x0 + q2 * x1 + q3 * x2 + q4 * x3;
+      let qy = q1 * y0 + q2 * y1 + q3 * y2 + q4 * y3;
+      let newX = 1 + (qx * Math.cos(12 * i) - qy * Math.sin(10 * i));
+      let newY = 1 + (qx * Math.sin(12 * i) + qy * Math.cos(10 * i));
+      t += 0.001;
+      console.log({ newX, newY });
+      AllPoint.push({
+        newX,
+        newY
+      });
+    }
+
+    this.drawPoint(AllPoint);
+  }
+
+  drawPoint(pointArray) {
     context.beginPath();
 
-    this.AllPoint.reduce((acc, item) => {
+    pointArray.reduce((acc, item) => {
       const { qx: startX, qy: startY } = acc;
       const { qx: finishX, qy: finishY } = item;
 
@@ -92,14 +120,29 @@ class UI {
 }
 
 const screenUI = new UI(canvas);
+let hack;
 
 canvas.addEventListener("click", e => {
   const { x, y } = screenUI.getMousePosition(e);
-
+  console.log({ x, y });
   const res = screenUI.savePoint(x, y);
 
   if (res) {
     const pointArray = screenUI.getPoint();
     const NewBezier = new Bezier(...pointArray);
-  }
+    // NewBezier.normalCurveBezier();
+    hack = NewBezier;
+    hack.Rotation();
+  } else context.fillRect(x, y, 1, 1);
 });
+
+function uiHandler(props) {
+  switch (props) {
+    case "Turn around":
+      hack.Rotation();
+      break;
+
+    default:
+      break;
+  }
+}

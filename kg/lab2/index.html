@@ -5,9 +5,25 @@
     <meta charset="utf-8">
     <title>lab 2</title>
 </head>
+<style>
+    .control {
+        position: absolute;
+        left: 40px;
+        top: 40px;
+    }
+</style>
 
 <body>
-    <canvas id="myCanvas" width="800" height="800"></canvas>
+    <div class="control">
+        <button onclick="uiHandler('Turn around')">Turn around</button>
+        <button onclick="uiHandler('Shift right')">Shift right</button>
+        <button onclick="uiHandler('Scaling Plus')">Scaling +</button>
+        <button onclick="uiHandler('Scaling Minus')">Scaling -</button>
+        <button onclick="uiHandler('Reflection')">Reflection</button>
+        <button onclick="uiHandler('Clear')">Clear</button>
+    </div>
+
+    <canvas id="myCanvas" width="2000" height="2000"></canvas>
 
     <script src="script.js"></script>
 </body>
