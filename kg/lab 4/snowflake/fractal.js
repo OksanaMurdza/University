@@ -5,9 +5,9 @@ function init() {
   const canvas = document.getElementById("imageView");
   context = canvas.getContext("2d");
 
-  fractal([50, 150], [500, 150], 5);
-  fractal([270, 490], [50, 150], 5);
-  fractal([500, 150], [270, 490], 5);
+  fractal([50, 150], [500, 150], 4);
+  fractal([270, 490], [50, 150], 4);
+  fractal([500, 150], [270, 490], 4);
 }
 
 function fractal(A, B, depth) {
@@ -39,10 +39,12 @@ const minus = (a, b) => [a[0] - b[0], a[1] - b[1]];
 const length = (a, b) => Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2);
 
 function DrawLine(a, b, c) {
-  context.beginPath();
-  context.strokeStyle = c;
-  context.moveTo(a[0], a[1]);
-  context.lineTo(b[0], b[1]);
-  context.stroke();
-  context.closePath();
+  setTimeout(() => {
+    context.beginPath();
+    context.strokeStyle = c;
+    context.moveTo(a[0], a[1]);
+    context.lineTo(b[0], b[1]);
+    context.stroke();
+    context.closePath();
+  }, 10);
 }
