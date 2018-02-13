@@ -1,53 +1,32 @@
 window.onload = () => {
-  const select = document.getElementById("select");
   const buttonSubmit = document.getElementById("saveButton");
-  const nameInput = document.getElementById("nameInput");
-  const valueInput = document.getElementById("valueInput");
-  const pathInput = document.getElementById("pathInput");
-  const domainInput = document.getElementById("domainInput");
+  const input = document.getElementsByTagName("input");
+  const prevCookie = document.getElementById("prevCookie");
+
+  const cookie = document.cookie.split(";");
+
+  prevCookie.innerHTML = cookie;
 
   buttonSubmit.addEventListener("click", () => {
-    const name = nameInput.value;
-    const value = valueInput.value;
+    const data = Object.values(input).map(({ value }) => value);
 
-    const options = {
-      expires: +select.value,
-      domain: domainInput.value
-      //   path: pathInput.value
-    };
-
-    setCookie(name, value, options);
+    set_cookie(...data);
   });
 };
 
-function setCookie(name, value, options) {
-  console.log(options);
-  options = options || {};
+function set_cookie(name, value, path, domain, exp_y, exp_m, exp_d) {
+  console.log(arguments);
+  var cookie_string = name + "=" + escape(value);
 
-  var expires = options.expires;
-
-  if (typeof expires == "number" && expires) {
-    var d = new Date();
-    d.setTime(d.getTime() + expires * 1000);
-    expires = options.expires = d;
-  }
-  if (expires && expires.toUTCString) {
-    options.expires = expires.toUTCString();
+  if (exp_y) {
+    var expires = new Date(+exp_y, +exp_m, +exp_d);
+    cookie_string += "; expires=" + expires.toGMTString();
   }
 
-  value = encodeURIComponent(value);
+  if (domain) cookie_string += "; domain=" + `'${escape(domain)}'`;
 
-  var updatedCookie = name + "=" + value;
+  if (path) cookie_string += "; path=" + escape(path);
 
-  for (var propName in options) {
-    updatedCookie += "; " + propName;
-    var propValue = options[propName];
-    if (propValue !== true) {
-      updatedCookie += "=" + propValue;
-    }
-  }
-
-  console.log(updatedCookie);
-  document.cookie = updatedCookie;
-  console.log(document.cookie);
+  console.log(cookie_string);
+  document.cookie = cookie_string;
 }

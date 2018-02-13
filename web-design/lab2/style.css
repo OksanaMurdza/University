@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css?family=Quicksand");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Quicksand", sans-serif;
+}
+
+.wrapper {
+  background-color: #148953;
+  padding: 20px;
+}
+
+input {
+  display: block;
+  margin: 15px;
+  padding: 10px;
+  width: 200px;
+  font-size: 18px;
+}
+
+button {
+  padding: 15px;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  background-color: #4286f4;
+  margin-left: 15px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+  transition: 0.2s;
+}
+
+a:hover {
+  color: #992509;
+  transition: 0.2s;
+}
