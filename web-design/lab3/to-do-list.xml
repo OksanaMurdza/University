@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<root>
+  <row>
+    <time>8:00</time>
+    <do>some</do>
+    <descr>more text</descr>
+  </row>
+  <row>
+    <time>10:00</time>
+    <do>some</do>
+    <descr>more text</descr>
+  </row>
+  <row>
+    <time>7:00</time>
+    <do>some</do>
+    <descr>more text</descr>
+  </row>
+  <row>
+    <time>4:00</time>
+    <do>some</do>
+    <descr>more text</descr>
+  </row>
+  <row>
+    <time>3:00</time>
+    <do>some</do>
+    <descr>more text</descr>
+  </row>
+  <row>
+    <time>2:00</time>
+    <do>some</do>
+    <descr>more text</descr>
+  </row>
+</root>
