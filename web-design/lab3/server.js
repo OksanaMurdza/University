@@ -11,7 +11,7 @@ const parsedXML = parse(xml);
 const uglyArrayWithToDo = parsedXML.root.children;
 
 const prettyArray = uglyArrayWithToDo.map(({ children }) =>
-  children.map(({ name, content }) => ({ name, content }))
+  children.map(({ content }) => content)
 );
 
 const app = express();

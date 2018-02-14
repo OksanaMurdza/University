@@ -1,8 +1,11 @@
 import $ from "jquery";
 import { takeToDoList } from "../api";
 
-window.onload = () => {
-  const ToDoList = [];
+$(() => takeToDoList().then(list => buildList(list)));
 
-  takeToDoList().then(d => console.log(d));
-};
+function buildList(list) {
+  const dealDIV = $("#deal");
+  list.forEach(item => {
+    const [time, deal, descr] = item;
+  });
+}
