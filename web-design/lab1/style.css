@@ -106,6 +106,7 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 15px;
 }
 
 .information {
@@ -160,4 +161,12 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.item-about {
+  font-size: 14px;
+  text-align: center;
+  padding-left: 5px;
+  padding-right: 5px;
+  max-width: 260px;
 }
