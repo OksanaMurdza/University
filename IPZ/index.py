@@ -6,8 +6,8 @@ from working import lexicProcess
 # filename = 'commentTestFalse'  
 # filename = 'unknowSymbolFalse'
 # filename = 'delimsTrue'
-filename = 'idnTrue'
-# filename = 'inputFile'
+# filename = 'idnTrue'
+filename = 'inputFile'
 
 
 
