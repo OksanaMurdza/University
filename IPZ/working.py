@@ -18,7 +18,7 @@ const = []
 
 
 
-def syntaxProcess(char):
+def lexicProcess(char):
 
     # global var
     global state
@@ -31,24 +31,15 @@ def syntaxProcess(char):
     global idns
     global const
 
-
-    if state == 'ws' and not char in dictionary['spaces']:
+    if state == 'ws' and not takeAsciiCode(char) in dictionary['spaces']:
         state = 's'
 
     if state == 's':
-        # return branch
-        if not char:
-            return {
-                'tokens': tokens,
-                'idns': idns,
-                'delimeters': delimeters,
-                'const': const
-            }
         # take delimeters 
-        elif char in dictionary['delimeters']:
+        if char in dictionary['delimeters']:
             tokenProcess(char, 'delimeters')
 
-        elif char in dictionary['spaces']:
+        elif takeAsciiCode(char) in dictionary['spaces']:
             state = 'ws'
         
         # take ind
@@ -65,7 +56,19 @@ def syntaxProcess(char):
         elif char == '(':
             state = 'bcom'
 
-    
+             # return branch
+        elif not char:
+            return {
+                'tokens': tokens,
+                'idns': idns,
+                'delimeters': delimeters,
+                'const': const
+            }
+
+        # unknow symbol :c
+        else:
+            printErrort(currentLine, currentPosition, char)
+
     elif state == 'idn':
         res = processIdnToken(char)
         if res != None:
@@ -83,7 +86,7 @@ def syntaxProcess(char):
 
     elif state == 'bcom':
         if char != '*':
-            printErrort(currentLine, currentPosition)
+            printErrort(currentLine, currentPosition, char)
             state = 's'
         else:
             state = 'com'

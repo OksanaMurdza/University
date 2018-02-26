@@ -1,13 +1,20 @@
 import json
 
-from working import syntaxProcess
+from working import lexicProcess
 
-filename = 'input'
+# filename = 'commentTestTrue'
+# filename = 'commentTestFalse'  
+# filename = 'unknowSymbolFalse'
+# filename = 'delimsTrue'
+filename = 'idnTrue'
+# filename = 'inputFile'
+
+
 
 with open(filename) as fs:
     while True:
-       result = syntaxProcess(fs.read(1))
+       result = lexicProcess(fs.read(1))
        if result != None:
            print json.dumps(result, indent = 4)
-        # print result
+        # print result 
            break

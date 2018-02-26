@@ -35,6 +35,6 @@ def arrayWithoutDuplicateItem(array):
 takeAsciiCode = lambda char: None if not char else ord(char)
 
 
-def printErrort(currLine, currPos):
-    print '{}ERROR:{}  on position {}{}, {}{}'.format(bcolors.FAIL, bcolors.ENDC, bcolors.BOLD, currLine, currPos, bcolors.ENDC)
+def printErrort(currLine, currPos, symbol = ''):
+    print '{}ERROR:{}  on position {}{}, {}{}  {}{}{}'.format(bcolors.FAIL, bcolors.ENDC, bcolors.BOLD, currLine, currPos,  bcolors.ENDC, bcolors.FAIL, symbol ,bcolors.ENDC)
 

@@ -23,7 +23,6 @@ def processNumToken(char):
     if char.isdigit():
         num_lexem += char
 
-    # test
     elif char.isalpha():
         num_lexem += char        
         idn_lexem = num_lexem
