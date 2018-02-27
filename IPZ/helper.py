@@ -38,3 +38,28 @@ takeAsciiCode = lambda char: None if not char else ord(char)
 def printErrort(currLine, currPos, symbol = ''):
     print '{}ERROR:{}  on position {}{}, {}{}  {}{}{}'.format(bcolors.FAIL, bcolors.ENDC, bcolors.BOLD, currLine, currPos,  bcolors.ENDC, bcolors.FAIL, symbol ,bcolors.ENDC)
 
+def outTable(data):
+    print bcolors.HEADER, 'line  pos  code  name\n----------------------', bcolors.ENDC
+
+    tokenData = finalLexicalChecker(data['tokens'])
+    # print loop
+    for token in tokenData:
+        print '{:4} {:4} {}{:5}{}  {}{}{}'.format(token['line'], token['pos'], bcolors.BOLD, token['code'], bcolors.ENDC, bcolors.OKBLUE, token['name'], bcolors.ENDC)
+        pass
+
+
+finalLexicalChecker = lambda data: filter(errorCatcher, data)
+
+
+def errorCatcher(string):
+    code = string['code']
+    name = string['name']
+
+    # check IDN
+    if code >= 1000:
+        if name[0].isdigit():
+            # TODO create new error out
+            print string
+            return False
+
+    return string

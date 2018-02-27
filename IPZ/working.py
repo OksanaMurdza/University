@@ -103,6 +103,8 @@ def lexicProcess(char):
         if char == ')':
             state = 's'
             return None
+        elif char == '*':
+            state = 'ecom' 
         elif not char:
             printErrort(currentLine, currentPosition)
             state = 's'

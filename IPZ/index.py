@@ -1,6 +1,7 @@
 import json
 
 from working import lexicProcess
+from helper import outTable
 
 # filename = 'commentTestTrue'
 # filename = 'commentTestFalse'  
@@ -15,6 +16,6 @@ with open(filename) as fs:
     while True:
        result = lexicProcess(fs.read(1))
        if result != None:
-           print json.dumps(result, indent = 4)
-        # print result 
+           outTable(result)
+        #    print json.dumps(result, indent = 4)
            break
