@@ -24,8 +24,9 @@ def processNumToken(char):
         num_lexem += char
 
     elif char.isalpha():
-        num_lexem += char        
+        num_lexem += char
         idn_lexem = num_lexem
+        num_lexem = ''        
         return {'status': False}
     else:
         res = num_lexem

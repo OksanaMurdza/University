@@ -17,5 +17,4 @@ with open(filename) as fs:
        result = lexicProcess(fs.read(1))
        if result != None:
            outTable(result)
-        #    print json.dumps(result, indent = 4)
            break

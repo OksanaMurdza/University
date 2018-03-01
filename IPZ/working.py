@@ -1,7 +1,7 @@
 import json
 
 from typeChecker import processIdnToken, processNumToken
-from helper import findDuplicateLexem, arrayWithoutDuplicateItem, takeAsciiCode, printErrort
+from helper import findDuplicateLexem, arrayWithoutDuplicateItem, takeAsciiCode, printError
 
 with open('dictionary.json', 'r') as fs:
     dictionary = json.load(fs)
@@ -67,7 +67,7 @@ def lexicProcess(char):
 
         # unknow symbol :c
         else:
-            printErrort(currentLine, currentPosition, char)
+            printError(currentLine, currentPosition, char)
 
     elif state == 'idn':
         res = processIdnToken(char)
@@ -86,14 +86,14 @@ def lexicProcess(char):
 
     elif state == 'bcom':
         if char != '*':
-            printErrort(currentLine, currentPosition, char)
+            printError(currentLine, currentPosition, char)
             state = 's'
         else:
             state = 'com'
 
     elif state == 'com':
         if not char:
-            printErrort(currentLine, currentPosition)            
+            printError(currentLine, currentPosition)            
             state = 's'
         elif char == '*':
             state = 'ecom'
@@ -106,7 +106,7 @@ def lexicProcess(char):
         elif char == '*':
             state = 'ecom' 
         elif not char:
-            printErrort(currentLine, currentPosition)
+            printError(currentLine, currentPosition)
             state = 's'
         else:
             state = 'com'
