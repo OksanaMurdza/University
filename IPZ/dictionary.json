@@ -1,0 +1,15 @@
+{
+  "spaces": [32, 8, 9, 10, 13],
+  "reserved": [
+    "BEGIN",
+    "END",
+    "ENDIF",
+    "THEN",
+    "ELSE",
+    "IF",
+    "PROGRAM",
+    "LABEL",
+    "GOTO"
+  ],
+  "delimeters": [";", ",", ".", ":", "="]
+}
