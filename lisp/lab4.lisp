@@ -9,14 +9,14 @@
             (progn 
                 (incf i)
                 (setq head (car lst))
-                (push head buffer)
-            )
-        )
+                (push head buffer)))
+            
+        
         (setq tail (cdr lst))
-        (newList tail)
-    )
-    (setq buffer (reverse buffer))
-)
+        (newList tail))
+    
+    (setq buffer (reverse buffer)))
+
 
 (newList set)
 (print buffer)
