@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<root>
+   <messages>
+      <element>
+         <createTime>10:00</createTime>
+         <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sem metus. Aliquam erat volutpat.</text>
+         <topic>University</topic>
+         <id>1</id>
+      </element>
+      <element>
+         <createTime>12:00</createTime>
+         <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sem metus. Aliquam erat volutpat.</text>
+         <topic>University</topic>
+         <id>2</id>         
+      </element>
+      <element>
+         <createTime>16:00</createTime>
+         <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sem metus. Aliquam erat volutpat.</text>
+         <topic>Job</topic>
+         <id>3</id>         
+      </element>
+      <element>
+         <createTime>11:00</createTime>
+         <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sem metus. Aliquam erat volutpat.</text>
+         <topic>Job</topic>
+         <id>4</id>
+      </element>
+      <element>
+         <createTime>11:00</createTime>
+         <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sem metus. Aliquam erat volutpat.</text>
+         <topic>Friend</topic>
+         <id>5</id>
+      </element>
+      <element>
+         <createTime>11:00</createTime>
+         <text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at sem metus. Aliquam erat volutpat.</text>
+         <topic>Friend</topic>
+         <id>6</id>
+      </element>
+   </messages>
+   <topic>
+      <element>University</element>
+      <element>Job</element>
+      <element>Friend</element>
+      <element>Dream</element>
+      <element>More text</element>
+      <element>Lorem</element>
+      <element>ipsum</element>
+      <element>dolor</element>
+      <element>sit</element>
+   </topic>
+</root>
