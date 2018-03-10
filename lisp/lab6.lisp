@@ -5,18 +5,13 @@
 (defvar sum 0)
 
 
-(defun sumSet (lst)
+(defun sumSet (lst &optional (a 0))
     (when lst
-        (let ((head (car lst)))
-         (let ((a ((lambda (x) (mod x 2)) head)))
+         (let ((a (mod (car lst) 2)))
              (if (= a 0)
-                 (incf sum head))
-             (let ((tail (cdr lst)))
-              (sumSet tail)))))
-        
-    
+                 (incf sum (car lst)))
+             (sumSet (cdr lst))))
     (return-from sumSet sum))
-
 
 (let ((res (sumSet concatLst)))
     (print res))

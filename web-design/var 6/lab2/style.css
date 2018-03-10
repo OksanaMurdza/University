@@ -1,0 +1,105 @@
+html,
+body {
+	padding: 0;
+	margin: 0;
+	height: 100vh;
+	background-color: #003567;
+}
+
+.calendar-wrapper {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+
+.calendar-container {
+	padding: 50px;
+	border-radius: 15px;
+	color: white;
+	background-color: #00407b;
+}
+
+.control-block {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-bottom: 20px;
+	align-items: center;
+}
+
+.control-block > button {
+	font-weight: 600;
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-position: center center;
+	width: 35px;
+	height: 35px;
+}
+
+#currentDate {
+	text-align: center;
+}
+
+table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+th,
+td {
+	padding: 15px;
+}
+
+td > div {
+	border-radius: 50%;
+	padding: 15px;
+	background-color: #004585;
+	text-align: center;
+	transition: .2s;
+}
+
+td > div:hover {
+	transition: .2s;
+	background-color: #0d4172;
+	cursor: pointer;
+}
+
+.not-current {
+	visibility: hidden;
+}
+
+.none {
+	/* display: none; */
+	transition: .5s;
+	transform: scaleY(1);
+}
+
+.scaleZero {
+	transition: .5s;
+	transform: scaleY(0);
+}
+
+/* today button style */
+#today {
+	background-color: #003567;
+	border: none;
+	margin-bottom: 20px;
+	color: white;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	transition: .2s;
+}
+
+#today:hover {
+	background-color: #004585;
+	transition: .2s;
+}
+
+/* today cell style */
+/* tut hack :c */
+.today > div {
+	background-color: #003567;
+}
