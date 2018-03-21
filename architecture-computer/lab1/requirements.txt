@@ -1,0 +1,17 @@
+asn1crypto==0.22.0
+cryptography==1.9
+dicttoxml==1.7.4
+enum34==1.1.6
+f.lux-indicator-applet==1.1.11rc0
+feedparser==5.2.1
+idna==2.5
+ipaddress==1.0.17
+keyring==10.4.0
+keyrings.alt==2.2
+pexpect==4.2.1
+pycrypto==2.6.1
+pygobject==3.24.1
+pyxdg==0.25
+SecretStorage==2.3.1
+six==1.10.0
+virtualenv==15.1.0

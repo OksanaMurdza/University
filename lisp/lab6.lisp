@@ -2,16 +2,12 @@
     (defvar concatLst (append firstLst secondLst)))
 
 
-(defvar sum 0)
 
 
-(defun sumSet (lst &optional (a 0))
+(defun sumSet (lst &optional (sum 0))
     (when lst
-         (let ((a (mod (car lst) 2)))
-             (if (= a 0)
-                 (incf sum (car lst)))
-             (sumSet (cdr lst))))
-    (return-from sumSet sum))
-
-(let ((res (sumSet concatLst)))
-    (print res))
+         (let ((headStatus (mod (car lst) 2)))
+             (if (= headStatus 0)
+                 (sumSet (cdr lst)))
+             (sumSet (cdr lst) (incf sum (car lst)))))
+    (return-from sumSet sum ))

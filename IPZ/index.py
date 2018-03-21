@@ -3,12 +3,12 @@ import json
 from working import lexicProcess
 from helper import outTable
 
-# filename = 'commentTestTrue'
+filename = 'commentTestTrue'
 # filename = 'commentTestFalse'  
 # filename = 'unknowSymbolFalse'
 # filename = 'delimsTrue'
 # filename = 'idnTrue'
-filename = 'inputFile'
+# filename = 'inputFile'
 
 
 
