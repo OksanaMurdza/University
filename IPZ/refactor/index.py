@@ -3,10 +3,10 @@ from working import lexic_process
 from helper import print_table
 
 
-# filename = 'input'
+filename = 'input'
 # filename = 'commentTestFalse'
 # filename = 'commentTestTrue'
-filename = 'delimsTrue'
+# filename = 'delimsTrue'
 # filename = 'inputFile'
 # filename = 'unknowSymbolFalse'
 

@@ -47,6 +47,7 @@ def lexic_process(char):
       state = 'ERROR'
     elif result != None:
       token_process(result, 'NUM')
+      state = 'S'
 
   elif state == 'BCOM':
     if char != '*':
@@ -150,13 +151,13 @@ def token_process(lexem, type):
 
   elif type == 'NUM':
     # if const code must not be uniq
-    code = find_duplicate_lexem(const, lexem)
+    code = find_duplicate_lexem(consts, lexem)
     if code == None:
-      code = 501 + len(array_without_duplicate(const))
+      code = 501 + len(array_without_duplicate(consts))
 
     # if const code must be uniq
     # code = len(const)
-    const.append({'name': lexem, 'code': code})
+    consts.append({'name': lexem, 'code': code})
 
   
   tokens.append({'line': currLine, 'code': code, 'name': lexem, 'pos':calculate_curr_pos(lexem)})
