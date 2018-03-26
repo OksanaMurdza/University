@@ -14,12 +14,13 @@ delimeters = []
 tokens = []
 idns = []
 consts = []
-
+prev_status = False
 
 def lexic_process(char):
   global currPos
   global currLine
   global state
+  global prev_status
 
   acii = take_acii_code(char)
 
@@ -69,6 +70,7 @@ def lexic_process(char):
       location = { 'line': currLine, 'pos': currPos }            
       print_error('Unexpected end of file', char, location)
     elif char == ')':
+      prev_status = 'ECOM'
       state = 'S'
       currPos += 1
       return None
@@ -97,6 +99,9 @@ def lexic_process(char):
 
     elif char == '(':
       state = 'BCOM'
+    
+    elif char == '*' and prev_status == 'ECOM':
+      state = 'ECOM'
 
     elif acii in dictionary['spaces']:
       state = 'WS'
@@ -105,7 +110,7 @@ def lexic_process(char):
       token_process(char, 'DELIMETERS')
 
     else:
-      location = { 'line': currLine, 'pos': currPos }      
+      location = { 'line': currLine, 'pos': currPos }
       print_error('unknown symbol', char, location)
 
     
