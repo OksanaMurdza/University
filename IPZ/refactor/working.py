@@ -33,7 +33,7 @@ def lexic_process(char):
     result = process_idn(char)
     if result == False:
       location = { 'line': currLine, 'pos': currPos }      
-      print_error('Wrong symbol defining number: ', char, location)
+      print_error('Wrong symbol defining identifier: ', char, location)
       state = 'ERROR'
     elif result != None:
       token_process(result, 'IDN')
@@ -43,7 +43,7 @@ def lexic_process(char):
     result = process_num(char)
     if result == False:
       location = { 'line': currLine, 'pos': currPos }            
-      print_error('Wrong symbol defining identifier', char, location)
+      print_error('Wrong symbol defining number', char, location)
       state = 'ERROR'
     elif result != None:
       token_process(result, 'NUM')
