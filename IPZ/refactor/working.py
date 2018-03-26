@@ -52,7 +52,7 @@ def lexic_process(char):
   elif state == 'BCOM':
     if char != '*':
       location = { 'line': currLine, 'pos': currPos }            
-      print_error('Expected \'*\' instead of', char, location)
+      print_error('Expected * instead of', char, location)
       state = 'S'
     else:
       state = 'COM'
