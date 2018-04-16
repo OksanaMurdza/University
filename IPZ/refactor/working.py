@@ -14,12 +14,13 @@ delimeters = []
 tokens = []
 idns = []
 consts = []
-
+prev_status = False
 
 def lexic_process(char):
   global currPos
   global currLine
   global state
+  global prev_status
 
   acii = take_acii_code(char)
 
@@ -33,7 +34,7 @@ def lexic_process(char):
     result = process_idn(char)
     if result == False:
       location = { 'line': currLine, 'pos': currPos }      
-      print_error('Wrong symbol defining identifier: ', char, location)
+      print_error('incorrect defining identifier: ', char, location)
       state = 'ERROR'
     elif result != None:
       token_process(result, 'IDN')
@@ -43,7 +44,7 @@ def lexic_process(char):
     result = process_num(char)
     if result == False:
       location = { 'line': currLine, 'pos': currPos }            
-      print_error('Wrong symbol defining number', char, location)
+      print_error('incorrect defining number', char, location)
       state = 'ERROR'
     elif result != None:
       token_process(result, 'NUM')
@@ -52,7 +53,7 @@ def lexic_process(char):
   elif state == 'BCOM':
     if char != '*':
       location = { 'line': currLine, 'pos': currPos }            
-      print_error('Expected \'*\' instead of', char, location)
+      print_error('Expected * instead of', char, location)
       state = 'S'
     else:
       state = 'COM'
@@ -69,6 +70,7 @@ def lexic_process(char):
       location = { 'line': currLine, 'pos': currPos }            
       print_error('Unexpected end of file', char, location)
     elif char == ')':
+      prev_status = 'ECOM'
       state = 'S'
       currPos += 1
       return None
@@ -97,6 +99,9 @@ def lexic_process(char):
 
     elif char == '(':
       state = 'BCOM'
+    
+    elif char == '*' and prev_status == 'ECOM':
+      state = 'ECOM'
 
     elif acii in dictionary['spaces']:
       state = 'WS'
@@ -105,7 +110,7 @@ def lexic_process(char):
       token_process(char, 'DELIMETERS')
 
     else:
-      location = { 'line': currLine, 'pos': currPos }      
+      location = { 'line': currLine, 'pos': currPos }
       print_error('unknown symbol', char, location)
 
     

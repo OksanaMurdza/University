@@ -2,4 +2,6 @@ BEGIN ;
 
 (*comment body*)
 
+(*(*  (**)  )) *)*) BEGIN
+
 END ;
