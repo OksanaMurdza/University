@@ -1,8 +1,8 @@
 import xml.etree.ElementTree as ET
 from dicttoxml import dicttoxml
+import os
 import feedparser
 import re
-
 
 def read_xml_file():
   tree = ET.parse('url.xml')
@@ -21,10 +21,8 @@ def score_process(string):
     regex = r"#{0,1}([A-z])*\svs\s#{0,1}([A-z])*: \d{1,2}-\d{1,2}"
     matches = re.finditer(regex, string)
     res = ''
-
     for matchNum, match in enumerate(matches):
-        res = match.group()
-
+      res = match.group()
     return res
 
 
@@ -41,8 +39,12 @@ def rss_parse(url):
         res.append(parsed)
   return res
 
-def print_to_file(data):
-  fh = open("result.xml","a")
+def print_to_file(fileName, data, mode):
+  fh = open(fileName, mode)
   fh.write(data)
   fh.write('\n')  
   fh.close()
+  return data
+
+def del_file(fileName):
+  os.remove("./" + fileName)
