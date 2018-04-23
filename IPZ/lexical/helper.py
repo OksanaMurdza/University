@@ -32,7 +32,7 @@ def array_without_duplicate(array):
     return newArray
 
 def print_table(data):
-  token_data = data['tokens']
+  tokens = data['tokens']
 
   # print error
   # for error in ErrorArray:
@@ -41,7 +41,7 @@ def print_table(data):
   print bcolors.HEADER, 'line  pos  code  name\n----------------------', bcolors.ENDC
 
   # print loop
-  for token in token_data:
+  for token in tokens:
       print '{:4} {:4} {}{:5}{}  {}{}{}'.format(token['line'], token['pos'], bcolors.BOLD, token['code'], bcolors.ENDC, bcolors.OKBLUE, token['name'], bcolors.ENDC)
 
 def print_error(msg, c, local):
@@ -49,3 +49,18 @@ def print_error(msg, c, local):
   currPos = local['pos']
 
   print '{}ERROR:{} {} \'{}\' on position {}{}, {}{}'.format(bcolors.FAIL, bcolors.ENDC, msg, c, bcolors.BOLD, currLine, currPos, bcolors.ENDC)
+
+def create_stack(data):
+    stack = []
+    tokens = data['tokens']
+
+    for token in tokens:
+        stack_item = {
+            'lexem': token['name'],
+            'code': token['code']
+        }
+        stack.append(stack_item)
+
+    return stack[::-1]
+
+    
