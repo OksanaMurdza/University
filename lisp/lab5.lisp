@@ -4,17 +4,22 @@
 
 
 
-(defun createSet(sets)
- (setq buffer '())
- (loop for set in sets
-  do (loop for item in set
-      do (if (not(member item buffer))
-          (push item buffer))))
- (return-from createSet buffer))
+;; (defun createSet(sets)
+;;  (setq buffer '())
+;;  (loop for set in sets
+;;   do (loop for item in set
+;;       do (if (not(member item buffer))
+;;           (push item buffer))))
+;;  (return-from createSet buffer))
+
+
  
  
 
 (defvar sets (list first second third)) 
-(defvar result (createSet sets))
-(print result)
+(defun l (&rest lists)
+    (remove-duplicates (apply #'append lists)))
+(print (l first second third))
+;; (defvar result (createSet sets))
+;; (print result)
     
