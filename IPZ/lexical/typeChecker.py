@@ -1,11 +1,12 @@
 import json
+import os
 
 from helper import take_acii_code
 
 idn_token = ''
 num_token = ''
 
-with open('dictionary.json', 'r') as fs:
+with open(os.path.dirname(os.path.realpath(__file__)) + '/dictionary.json', 'r') as fs:
     dictionary = json.load(fs)
 
 def process_idn(char):

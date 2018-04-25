@@ -1,10 +1,11 @@
 import json
+import os
 
 from typeChecker import process_idn, process_num
 from helper import take_acii_code, find_duplicate_lexem, array_without_duplicate, print_error
 
-with open('dictionary.json', 'r') as fs:
-    dictionary = json.load(fs)
+with open(os.path.dirname(os.path.realpath(__file__)) + '/dictionary.json', 'r') as fs:
+  dictionary = json.load(fs)
 
 
 currPos = 1
