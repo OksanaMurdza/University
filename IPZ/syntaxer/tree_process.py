@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 lexem_table = None
 current_lexem = None
 
@@ -31,10 +34,13 @@ def program(node):
         next_lexem()
         # block
         if block():
+          print 'block'
           return False
         if current_lexem['code'] != 46:
           print '!!! ERRRO NOT FOUND .'
           return False
+        else:
+          print 'all ok'
 
     else:
       print '!!! ERROR !!! not ident'
@@ -54,6 +60,48 @@ def identifier():
   return True
 
 def block():
+  global current_lexem
+
+  if declarations():
+    return True
+  
+  if current_lexem['lexem'] != 'BEGIN':
+    print current_lexem
+    return True
+  next_lexem()
+
+  if statements_list():
+    return True
+
+  # временно
+  if current_lexem['lexem'] != 'END':
+    return True
+
+  else:
+    next_lexem()
+
+
+def declarations():
+  global current_lexem
+
+  if label_declarations():
+    return True
+
+def label_declarations():
+  global current_lexem
+
+  if current_lexem['lexem'] != 'LABEL':
+    return True
+
+  next_lexem()
+  if unsigned_integer():
+    return True
+
+  if label_list():
+    return True
+  
+
+def statements_list():
   return False
 
 def parse(stack):
@@ -66,4 +114,23 @@ def parse(stack):
   program(current_lexem)
 
 
-    
+def unsigned_integer():
+  global current_lexem
+
+  if current_lexem['code'] < 501 or current_lexem['code'] > 1000:
+    print 'ERROR NOT UNSIGNED CHAR'
+    return True
+  else:
+    next_lexem()
+
+def label_list():
+  global current_lexem
+
+  if current_lexem['lexem'] != ',':
+    return True
+
+  next_lexem()
+  if unsigned_integer():
+    return True
+
+  
