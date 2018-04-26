@@ -87,6 +87,8 @@ def declarations():
   if label_declarations():
     return True
 
+
+
 def label_declarations():
   global current_lexem
 
@@ -99,6 +101,14 @@ def label_declarations():
 
   if label_list():
     return True
+
+  #  ;
+  if current_lexem['code'] != 59:
+    print 'ERROR ; in label decl'
+    return True
+
+  else:
+    next_lexem()
   
 
 def statements_list():
@@ -117,8 +127,8 @@ def parse(stack):
 def unsigned_integer():
   global current_lexem
 
+  # const
   if current_lexem['code'] < 501 or current_lexem['code'] > 1000:
-    print 'ERROR NOT UNSIGNED CHAR'
     return True
   else:
     next_lexem()
@@ -126,11 +136,19 @@ def unsigned_integer():
 def label_list():
   global current_lexem
 
-  if current_lexem['lexem'] != ',':
-    return True
 
-  next_lexem()
-  if unsigned_integer():
-    return True
+  if current_lexem['lexem'] == ',':
+    next_lexem()
+    if unsigned_integer():
+      return True
+  else:
+    if not unsigned_integer():
+      print 'ERROR , in label list!'
+      return True
+    else:
+      # print next_item
+      print 'label_list <empty>'
 
-  
+  # 401 - 500 BEGIN END FOR
+  # 501 - 1000 const
+  # 1001 - ident
