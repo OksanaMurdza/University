@@ -3,8 +3,11 @@ LABEL 21, 12;
 
 BEGIN
 
-1 : GOTO 12;
-1: GOTO 1233;
-1 : GOTO 12;
+
+1 : 
+  IF 24 = 23 
+    THEN 15 :; 
+  ELSE 
+    22 : GOTO 12;
 
 END.

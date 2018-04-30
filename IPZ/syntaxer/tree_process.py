@@ -151,12 +151,13 @@ def statement():
     next_lexem()
     return False
   
-  # elif condition_statement():
-  #   if current_lexem['lexem'] != 'ENDIF':
-  #     return True
-  #   next_lexem()
-  #   if current_lexem['lexem'] != ';':
-  #     return True
+  elif not condition_statement():
+    if current_lexem['lexem'] != 'ENDIF':
+      return True      
+    next_lexem()
+    if current_lexem['lexem'] != ';':
+      return True
+    next_lexem()
 
   elif current_lexem['lexem'] == ';':
     next_lexem()
@@ -166,6 +167,63 @@ def statement():
 
 
 def condition_statement():
+  if incomplete_condition_statement():
+    return True
+
+  if alternative_part():
+    return True
+
+  return False
+
+def incomplete_condition_statement():
+  global current_lexem
+
+  if current_lexem['lexem'] != 'IF':
+    return True
+  next_lexem()
+  if condition_expression():
+    return True
+
+  if current_lexem['lexem'] != 'THEN':
+    return True
+
+  next_lexem()
+  if statements_list():
+    return True
+
+  # next_lexem()
+  return False
+
+def alternative_part():
+  global current_lexem
+
+  if current_lexem['lexem'] == 'ELSE':
+    next_lexem()
+    if statements_list():
+      return True
+  else:
+    next = take_next_item()
+    if next['lexem'] == 'END':
+      # empty
+      return False
+  return True
+
+def condition_expression():
+  if variable_identifier():
+    return True
+  next_lexem()
+  if current_lexem['lexem'] != '=':
+    return True
+  next_lexem()
+  if unsigned_integer():
+    return True
+
+  return False
+
+def variable_identifier():
+  if identifier():
+    return True
+
   return False
 
 
