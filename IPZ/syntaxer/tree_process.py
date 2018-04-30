@@ -19,6 +19,8 @@ def program(node):
   lexem = current_lexem['lexem']
   code = current_lexem['code']
 
+  take_next_item()
+
   if code != 407:
     print '!!! ERROR !!!'
   else:
@@ -66,13 +68,14 @@ def block():
     return True
   
   if current_lexem['lexem'] != 'BEGIN':
-    print current_lexem
     return True
   next_lexem()
+
 
   if statements_list():
     return True
 
+  # next_lexem()
   # временно
   if current_lexem['lexem'] != 'END':
     return True
@@ -92,27 +95,79 @@ def declarations():
 def label_declarations():
   global current_lexem
 
-  if current_lexem['lexem'] != 'LABEL':
-    return True
-
-  next_lexem()
-  if unsigned_integer():
-    return True
-
-  if label_list():
-    return True
-
-  #  ;
-  if current_lexem['code'] != 59:
-    print 'ERROR ; in label decl'
-    return True
-
-  else:
+  if current_lexem['lexem'] == 'LABEL':
     next_lexem()
+
+    if unsigned_integer():
+      return True
+
+    if label_list():
+      return True
+
+    if current_lexem['code'] != 59:
+      print 'ERROR ; in label declaration'
+      return True
+    else:
+      next_lexem()
+      return False
+  
+  elif current_lexem['lexem'] != 'BEGIN':
+    print 'ERROR!! MISS BEGIN IN BLOCK'
+    return True
   
 
+  # debug
+  if current_lexem['lexem'] == 'BEGIN':
+    print '<empty> in label_declarations'
+
+
 def statements_list():
+  if not statement():
+    statements_list()
+  else:
+    if current_lexem['lexem'] != 'END':
+      return True
+
+def statement():
+  global current_lexem
+
+  if not unsigned_integer():
+    if current_lexem['lexem'] != ':':
+      print 'ERROR!!! Miss : in statement 2'
+      return True
+    next_lexem()
+    if statement():
+      return True
+    
+    return False
+
+  if current_lexem['lexem'] == 'GOTO':
+    next_lexem()
+    if unsigned_integer():
+      return True
+    if current_lexem['lexem'] != ';':
+      print 'ERROR!!! Miss ; in statement 1'
+      return True
+    next_lexem()
+    return False
+  
+  # elif condition_statement():
+  #   if current_lexem['lexem'] != 'ENDIF':
+  #     return True
+  #   next_lexem()
+  #   if current_lexem['lexem'] != ';':
+  #     return True
+
+  elif current_lexem['lexem'] == ';':
+    next_lexem()
+    return False
+
+  return True
+
+
+def condition_statement():
   return False
+
 
 def parse(stack):
   global lexem_table
@@ -140,6 +195,9 @@ def label_list():
   if current_lexem['lexem'] == ',':
     next_lexem()
     if unsigned_integer():
+      print 'ERROR net unsigned_integer'
+      return True
+    if label_list():
       return True
   else:
     if not unsigned_integer():
@@ -152,3 +210,17 @@ def label_list():
   # 401 - 500 BEGIN END FOR
   # 501 - 1000 const
   # 1001 - ident
+
+def take_next_item():
+  global current_lexem
+  global lexem_table
+
+  current = current_lexem
+  next_lexem()
+
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
