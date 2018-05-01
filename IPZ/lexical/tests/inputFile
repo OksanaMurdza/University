@@ -1,13 +1,16 @@
-PROGRAM tt1;
+PROGRAM a1;
+
+
 LABEL 21, 12;
 
 BEGIN
 
-
 1 : 
-  IF 24 = 23 
-    THEN 15 :; 
+  IF tt2 = 23 
+    THEN 15 : GOTO 13; 
   ELSE 
     22 : GOTO 12;
+  ENDIF;
 
 END.
+
