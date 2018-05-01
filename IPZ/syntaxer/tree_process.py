@@ -7,7 +7,7 @@ from tree_struct import Node
 lexem_table = None
 current_lexem = None
 
-parse_tree = Node('<signal>')
+parse_tree = Node('<signal-program>')
 
 
 def next_lexem():
@@ -46,11 +46,13 @@ def program(node):
         next_lexem()
         if block(curr_node):
           return False
-        if current_lexem['code'] != 46:
-          print '!!! ERRRO NOT FOUND .'
+        if current_lexem['lexem'] != '.':
+          print '!!! ERROR !!! Not found .'
           return False
         else:
-          curr_node.view()
+          curr_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+          parse_tree.add(curr_node)
+          parse_tree.view()
 
     else:
       print '!!! ERROR !!! not ident'
@@ -275,7 +277,6 @@ def condition_expression(node):
 def variable_identifier(node):
   global current_lexem
   current_node = Node('<variable_identifier>')
-  print current_lexem
   if not identifier(current_node):
     return True
   node.add(current_node)
