@@ -1,4 +1,4 @@
-from tree_struct import Node, error_print
+from tree_struct import Node, bc
 
 
 lexem_table = None
@@ -30,7 +30,7 @@ def program(node):
   curr_node = Node('<program>')
 
 
-  if current_lexem['code'] != 407:
+  if current_lexem['lexem'] != 'PROGRAM':
     error_print('NOT_FOUND', 'PROGRAM')
     parse_tree.add(curr_node)
     parse_tree.view()
@@ -40,7 +40,7 @@ def program(node):
 
     if procedure_identifier(curr_node):
       next_lexem()
-      if current_lexem['code'] != 59:
+      if current_lexem['lexem'] != ';':
         error_print('NOT_FOUND', ';')
         parse_tree.add(curr_node)
         parse_tree.view()
@@ -48,6 +48,8 @@ def program(node):
       else:
         next_lexem()
         if block(curr_node):
+          parse_tree.add(curr_node)
+          parse_tree.view()
           return False
         if current_lexem['lexem'] != '.':
           error_print('NOT_FOUND', '.')
@@ -60,7 +62,7 @@ def program(node):
           parse_tree.view()
 
     else:
-      error_print('TYPE_ERROR')
+      error_print('NOT_FOUND', 'identifier')
       parse_tree.add(curr_node)
       parse_tree.view()
 
@@ -92,6 +94,8 @@ def block(node):
     return True
   
   if current_lexem['lexem'] != 'BEGIN':
+    node.add(current_node)
+    error_print('NOT_FOUND', 'BEGIN')
     return True
 
   add_current_item(current_node)
@@ -101,6 +105,8 @@ def block(node):
     return True
 
   if current_lexem['lexem'] != 'END':
+    node.add(current_node)
+    error_print('NOT_FOUND', 'END')
     return True
 
   else:
@@ -139,7 +145,8 @@ def label_declarations(node):
       return True
 
     if current_lexem['code'] != 59:
-      print 'ERROR ; in label declaration'
+      node.add(current_node)
+      error_print('NOT_FOUND', ';')
       return True
     add_current_item(current_node)
     node.add(current_node)
@@ -175,6 +182,8 @@ def statement(node):
 
   if not unsigned_integer(current_node):
     if current_lexem['lexem'] != ':':
+      node.add(current_node)
+      error_print('NOT_FOUND', ':')
       return True
     add_current_item(current_node)
     next_lexem()
@@ -189,6 +198,8 @@ def statement(node):
     if unsigned_integer(current_node):
       return True
     if current_lexem['lexem'] != ';':
+      node.add(current_node)
+      error_print('NOT_FOUND', ';')
       return True
     add_current_item(current_node)
     # ;
@@ -198,11 +209,19 @@ def statement(node):
 
   if not condition_statement(current_node):
     if current_lexem['lexem'] != 'ENDIF':
+      node.add(current_node)
+      error_print('NOT_FOUND', 'ENDIF')
+
       return True
     add_current_item(current_node)
     next_lexem()
+
     if current_lexem['lexem'] != ';':
+      node.add(current_node)
+      error_print('NOT_FOUND', ';')
+
       return True
+
     add_current_item(current_node)
     node.add(current_node)
     return False
@@ -236,6 +255,8 @@ def incomplete_condition_statement(node):
 
 
   if current_lexem['lexem'] != 'IF':
+    node.add(current_node)
+    # error_print('NOT_FOUND', 'IF')
     return True
   add_current_item(current_node)
   next_lexem()
@@ -243,6 +264,8 @@ def incomplete_condition_statement(node):
     return True
 
   if current_lexem['lexem'] != 'THEN':
+    node.add(current_node)
+    error_print('NOT_FOUND', 'THEN')
     return True
   add_current_item(current_node)
   next_lexem()
@@ -265,7 +288,7 @@ def alternative_part(node):
   else:
     next = take_next_item()
     if next['lexem'] == 'END':
-      # empty
+      node.add('<empty>')
       return False
   node.add(current_node)
   return False
@@ -276,6 +299,8 @@ def condition_expression(node):
     return True
   next_lexem()
   if current_lexem['lexem'] != '=':
+    node.add(current_node)
+    error_print('NOT_FOUND', '=')
     return True
   add_current_item(current_node)
   next_lexem()
@@ -288,6 +313,8 @@ def variable_identifier(node):
   global current_lexem
   current_node = Node('<variable_identifier>')
   if not identifier(current_node):
+    node.add(current_node)
+    error_print('NOT_FOUND', 'identifier')
     return True
   node.add(current_node)
   return False
@@ -356,3 +383,82 @@ def take_next_item():
   current_lexem = current
 
   return next
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
+
+
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
+
+  current = current_lexem
+  next_lexem()
+
+
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
+  current_lexem = current
+
+  return next
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
+
+
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
+
+  current = current_lexem
+  next_lexem()
+
+
+  next = current_lexem
+
+  lexem_table.append(next)
+  current_lexem = current
+
+  return next
+
+
+
+def error_print(err_type, expected = ''):
+  global current_lexem
+
+  pos = current_lexem['pos']
+  line = current_lexem['line']
+  lexem = current_lexem['lexem']
+
+  if err_type == 'NOT_FOUND':
+    print 'Parser: {}Error{} (line {}{}{}, column {}{}{}): `<{}>` expected but "{}" found'.format(
+    bc.FAIL,
+    bc.ENDC,
+    bc.WARNING,
+    line,
+    bc.ENDC,
+    bc.WARNING,
+    pos,
+    bc.ENDC,
+    expected,
+    lexem,
+    )
+  
+  elif err_type == 'TYPE_ERROR':
+    print 'Sorry, but type must be another :)'
