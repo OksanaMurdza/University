@@ -57,7 +57,9 @@ def create_stack(data):
     for token in tokens:
         stack_item = {
             'lexem': token['name'],
-            'code': token['code']
+            'code': token['code'],
+            'line': token['line'],
+            'pos': token['pos']
         }
         stack.append(stack_item)
 

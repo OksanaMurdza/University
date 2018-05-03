@@ -30,34 +30,13 @@ class Node:
     print '{}{}-|{}{}{}{}'.format(bc.OKBLUE, padding, bc.ENDC, msgColor, value, bc.ENDC)
     for node in self.children:
       node.view(level + 1)
-  # def remove(self):
-  #   if (self.parent):
-  #     self.parent.children.remove(self)
-  #     return self, self.parent
-  #   else:
-  #     return None
 
-# dic = {'name': 'program', 'code': 12}
-# 
-# signal = Node(dic)
 
-# program = Node('<program>')
+# error logger
+def error_print(err_type):
 
-# block = Node('<block>')
-# program.add(block)
-
-# signal.add(program)
-# print node.value
-# print node.children
-
-# newNode = Node('<program>')
-# print newNode.value
-# print newNode.children
-
-# node.add(newNode)
-# node.add(Node('uhhh, blya'))
-# print node.value
-
-# node.add(Node('test'))
-# node.children[2].add(Node('uhhh'))
-# signal.view()
+  if err_type == 'NOT_FOUND':
+    print 'Sorry, but i can`t found {}{}{} in the lexem'.format(bc.FAIL, symbol, bc.ENDC)
+  
+  elif err_type == 'TYPE_ERROR':
+    print 'Sorry, but type must be another :)'

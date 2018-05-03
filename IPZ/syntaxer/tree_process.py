@@ -1,13 +1,16 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from tree_struct import Node
+from tree_struct import Node, error_print
 
 
 lexem_table = None
 current_lexem = None
 
 parse_tree = Node('<signal-program>')
+
+
+def add_current_item(current_node):
+  global current_lexem
+
+  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
 
 
 def next_lexem():
@@ -19,43 +22,47 @@ def next_lexem():
   except:
     pass
 
+
 def program(node):
   global current_lexem
   global parse_tree
 
-  lexem = current_lexem['lexem']
-  code = current_lexem['code']
-  
   curr_node = Node('<program>')
 
 
-  if code != 407:
-    print '!!! ERROR !!!'
+  if current_lexem['code'] != 407:
+    error_print('NOT_FOUND', 'PROGRAM')
+    parse_tree.add(curr_node)
+    parse_tree.view()
   else:
-    #  PROGRAM
-    curr_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))    
-    # procedure_identifier
+    add_current_item(curr_node)
     next_lexem()
 
     if procedure_identifier(curr_node):
       next_lexem()
       if current_lexem['code'] != 59:
-        print '!!! ERROR !!! NOT FOUNG ;'
+        error_print('NOT_FOUND', ';')
+        parse_tree.add(curr_node)
+        parse_tree.view()
         return False
       else:
         next_lexem()
         if block(curr_node):
           return False
         if current_lexem['lexem'] != '.':
-          print '!!! ERROR !!! Not found .'
+          error_print('NOT_FOUND', '.')
+          parse_tree.add(curr_node)
+          parse_tree.view()
           return False
         else:
-          curr_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+          add_current_item(curr_node)
           parse_tree.add(curr_node)
           parse_tree.view()
 
     else:
-      print '!!! ERROR !!! not ident'
+      error_print('TYPE_ERROR')
+      parse_tree.add(curr_node)
+      parse_tree.view()
 
 def procedure_identifier(node):
   current_node = Node('<procedure_identifier>')
@@ -71,7 +78,7 @@ def identifier(node):
     # error
     return False
   current_node = Node('<identifier>')
-  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+  add_current_item(current_node)
   node.add(current_node)
   return True
 
@@ -87,7 +94,7 @@ def block(node):
   if current_lexem['lexem'] != 'BEGIN':
     return True
 
-  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+  add_current_item(current_node)
   next_lexem()
 
   if statements_list(current_node):
@@ -97,9 +104,11 @@ def block(node):
     return True
 
   else:
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     node.add(current_node)
     next_lexem()
+
+  
 
 
 def declarations(node):
@@ -120,7 +129,7 @@ def label_declarations(node):
   current_node = Node('<label_declarations>')
 
   if current_lexem['lexem'] == 'LABEL':
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     next_lexem()
 
     if unsigned_integer(current_node):
@@ -132,7 +141,7 @@ def label_declarations(node):
     if current_lexem['code'] != 59:
       print 'ERROR ; in label declaration'
       return True
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     node.add(current_node)
     next_lexem()
 
@@ -152,10 +161,11 @@ def statements_list(node):
   if not statement(current_node):
     statements_list(current_node)
     node.add(current_node)
-  else:
-    return True
+    return False
+  
+  return True
 
-  return False
+  
 
 
 def statement(node):
@@ -166,7 +176,7 @@ def statement(node):
   if not unsigned_integer(current_node):
     if current_lexem['lexem'] != ':':
       return True
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     next_lexem()
     if statement(current_node):
       return True
@@ -174,13 +184,13 @@ def statement(node):
     return False
 
   if current_lexem['lexem'] == 'GOTO':
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     next_lexem()
     if unsigned_integer(current_node):
       return True
     if current_lexem['lexem'] != ';':
       return True
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     # ;
     next_lexem()
     node.add(current_node)
@@ -189,16 +199,16 @@ def statement(node):
   if not condition_statement(current_node):
     if current_lexem['lexem'] != 'ENDIF':
       return True
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     next_lexem()
     if current_lexem['lexem'] != ';':
       return True
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     node.add(current_node)
     return False
 
   if current_lexem['lexem'] == ';':
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     node.add(current_node)
     next_lexem()
     return False
@@ -227,14 +237,14 @@ def incomplete_condition_statement(node):
 
   if current_lexem['lexem'] != 'IF':
     return True
-  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+  add_current_item(current_node)
   next_lexem()
   if condition_expression(current_node):
     return True
 
   if current_lexem['lexem'] != 'THEN':
     return True
-  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+  add_current_item(current_node)
   next_lexem()
   if statements_list(current_node):
     return True
@@ -248,7 +258,7 @@ def alternative_part(node):
   current_node = Node('<incomplete_condition_statement>')
 
   if current_lexem['lexem'] == 'ELSE':
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     next_lexem()
     if statements_list(current_node):
       return True
@@ -267,7 +277,7 @@ def condition_expression(node):
   next_lexem()
   if current_lexem['lexem'] != '=':
     return True
-  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+  add_current_item(current_node)
   next_lexem()
   if unsigned_integer(current_node):
     return True
@@ -301,7 +311,7 @@ def unsigned_integer(node):
   if current_lexem['code'] < 501 or current_lexem['code'] > 1000:
     return True
   else:
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     node.add(current_node)
     next_lexem()
 
@@ -311,7 +321,7 @@ def label_list(node):
   current_node = Node('<label_list>')
 
   if current_lexem['lexem'] == ',':
-    current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+    add_current_item(current_node)
     next_lexem()
     if unsigned_integer(current_node):
       print 'ERROR net unsigned_integer'
@@ -327,7 +337,6 @@ def label_list(node):
       # print next_item
       current_node.add(Node('<empty>'))
       node.add(current_node)
-      print 'label_list <empty>'
 
   # 401 - 500 BEGIN END FOR
   # 501 - 1000 const
