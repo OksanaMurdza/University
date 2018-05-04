@@ -33,10 +33,4 @@ class Node:
 
 
 # error logger
-def error_print(err_type):
 
-  if err_type == 'NOT_FOUND':
-    print 'Sorry, but i can`t found {}{}{} in the lexem'.format(bc.FAIL, symbol, bc.ENDC)
-  
-  elif err_type == 'TYPE_ERROR':
-    print 'Sorry, but type must be another :)'
