@@ -9,15 +9,11 @@ quote_page = 'http://forum.turizm.ru/common/likbez/aptechka-v-dorogu.html?view=u
 
 page = urllib2.urlopen(quote_page)
 
-soup = BeautifulSoup(page, 'html.parser')
-
-body = soup.find('body')
-
-name_author = body.findAll('a', attrs={'class': 'fm-post__author-link fm-post__author-link_no-margin'})
-messages_stack = []
+body = BeautifulSoup(page, 'html.parser').find('body')
 
 
-all_messages = soup.findAll('div', attrs={'class': 'fm-post__message mq-xs-fm-post__message cmn-editor-content jq-selection-wrap'})
+all_name_author = body.findAll('a', attrs={'class': 'fm-post__author-link fm-post__author-link_no-margin'})
+all_messages = body.findAll('div', attrs={'class': 'fm-post__message mq-xs-fm-post__message cmn-editor-content jq-selection-wrap'})
 
 
 for i in all_messages:
