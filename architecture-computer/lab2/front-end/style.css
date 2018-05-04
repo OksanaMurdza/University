@@ -1,0 +1,13 @@
+ul > li {
+  list-style: none;
+  background-color: #00ccff;
+  margin-bottom: 25px; 
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+p {
+  font-weight: 700;
+  font-style: italic;
+}

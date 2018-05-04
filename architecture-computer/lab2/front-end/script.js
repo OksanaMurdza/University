@@ -1,14 +1,13 @@
 window.onload = () => {
-	render()
-	// fetchData()
-		// .then(data => render(data))
-		// .catch(err => console.log(Err))
+	fetchData()
+		.then(data => render(data))
+		.catch(err => console.log(err))
 }
 
 function fetchData(argument) {
-	const URL = '10.25.'
+	const URL = 'http://localhost:5000/api'
 	return new Promise((resolve, reject) => {
-		fetch(`${URL}/`)
+		fetch(`${URL}`)
 			.then(data => data.json())
 			.then(data => resolve(data))
 			.catch(err => reject(err))
@@ -16,8 +15,17 @@ function fetchData(argument) {
 }
 
 
+
 function render(data) {
 	const app = document.getElementById('app')
-	let view = 'ul'
-	console.log(data)
+	let view = '<ul>'
+	Object.values(data).forEach(({ author, text }) => {
+		view += 
+		`<li> 
+			<p class="author">${author}</p>  
+			<span class="text">${text}</span>
+		</li>`
+	})
+	view += '</ul>'
+	app.innerHTML = view
 }
