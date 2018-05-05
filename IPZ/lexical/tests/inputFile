@@ -1,15 +1,16 @@
-PROGRAM a1;
+PROGRAM program1;
 
 
-LABEL 21, 12; 
+LABEL 12, 15;
 
 BEGIN
 
+
 1 : 
-  IF 1122 = 23 
+  IF var1 = 23 
     THEN 
       5 :
-            IF tt3 = 24
+            IF var2 = 24
               THEN
                 7 : GOTO 12;
                 ENDIF;
