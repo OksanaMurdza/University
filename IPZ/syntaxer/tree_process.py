@@ -6,6 +6,8 @@ current_lexem = None
 
 parse_tree = Node('<signal-program>')
 
+empty_authorized = ['ENDIF', 'END', 'ELSE']
+error_stack = []
 
 def add_current_item(current_node):
   global current_lexem
@@ -86,11 +88,11 @@ def identifier(node):
 
 def block(node):
   global current_lexem
-  global statements_stack
 
   current_node = Node('<block>')
   
   if declarations(current_node):
+    node.add(current_node)
     return True
   
   if current_lexem['lexem'] != 'BEGIN':
@@ -102,6 +104,7 @@ def block(node):
   next_lexem()
 
   if statements_list(current_node):
+    node.add(current_node)
     return True
 
   if current_lexem['lexem'] != 'END':
@@ -123,6 +126,7 @@ def declarations(node):
   current_node = Node('<declarations>')
 
   if label_declarations(current_node):
+    node.add(current_node)
     return True
 
   node.add(current_node)
@@ -139,6 +143,8 @@ def label_declarations(node):
     next_lexem()
 
     if unsigned_integer(current_node):
+      node.add(current_node)
+      error_print('NOT_FOUND', 'unsigned_integer')
       return True
 
     if label_list(current_node):
@@ -148,6 +154,7 @@ def label_declarations(node):
       node.add(current_node)
       error_print('NOT_FOUND', ';')
       return True
+
     add_current_item(current_node)
     node.add(current_node)
     next_lexem()
@@ -158,18 +165,27 @@ def label_declarations(node):
     return False
 
   else:
+    node.add(current_node)
+    error_print('NOT_FOUND', 'LABEL')
     return True
     
 
 def statements_list(node):
   global statements_stack
   
-  current_node = Node('<statements_list>')
+  current_node = Node('statements_list')
   if not statement(current_node):
     statements_list(current_node)
     node.add(current_node)
     return False
   
+  if current_lexem['lexem'] in empty_authorized:
+    current_node.add(Node('<empty>'))
+    node.add(current_node)
+    return False
+
+  error_print('UNEXPECTED')
+  node.add(current_node)
   return True
 
   
@@ -211,19 +227,19 @@ def statement(node):
     if current_lexem['lexem'] != 'ENDIF':
       node.add(current_node)
       error_print('NOT_FOUND', 'ENDIF')
-
       return True
+
     add_current_item(current_node)
     next_lexem()
 
     if current_lexem['lexem'] != ';':
       node.add(current_node)
       error_print('NOT_FOUND', ';')
-
       return True
 
     add_current_item(current_node)
     node.add(current_node)
+    next_lexem()
     return False
 
   if current_lexem['lexem'] == ';':
@@ -383,68 +399,22 @@ def take_next_item():
   current_lexem = current
 
   return next
-  next = current_lexem
-
-  lexem_table.append(next)
-  current_lexem = current
-
-  return next
-
-
-  next = current_lexem
-
-  lexem_table.append(next)
-  current_lexem = current
-
-  return next
-
-  current = current_lexem
-  next_lexem()
-
-
-  next = current_lexem
-
-  lexem_table.append(next)
-  current_lexem = current
-
-  return next
-  current_lexem = current
-
-  return next
-  next = current_lexem
-
-  lexem_table.append(next)
-  current_lexem = current
-
-  return next
-
-
-  next = current_lexem
-
-  lexem_table.append(next)
-  current_lexem = current
-
-  return next
-
-  current = current_lexem
-  next_lexem()
-
-
-  next = current_lexem
-
-  lexem_table.append(next)
-  current_lexem = current
-
-  return next
-
 
 
 def error_print(err_type, expected = ''):
   global current_lexem
+  global error_stack
 
   pos = current_lexem['pos']
   line = current_lexem['line']
   lexem = current_lexem['lexem']
+
+  
+  if lexem in error_stack:
+    return
+
+  error_stack.append(lexem)
+
 
   if err_type == 'NOT_FOUND':
     print 'Parser: {}Error{} (line {}{}{}, column {}{}{}): `<{}>` expected but "{}" found'.format(
@@ -457,8 +427,18 @@ def error_print(err_type, expected = ''):
     pos,
     bc.ENDC,
     expected,
-    lexem,
+    lexem
     )
   
-  elif err_type == 'TYPE_ERROR':
-    print 'Sorry, but type must be another :)'
+  elif err_type == 'UNEXPECTED':
+    print 'Parser: {}Error{} (line {}{}{}, column {}{}{}) Unexpected token `<{}>`'.format(
+      bc.FAIL,
+      bc.ENDC,
+      bc.WARNING,
+      line,
+      bc.ENDC,
+      bc.WARNING,
+      pos,
+      bc.ENDC,
+      lexem
+      )
