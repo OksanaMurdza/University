@@ -294,8 +294,8 @@ def incomplete_condition_statement(node):
 def alternative_part(node):
   global current_lexem
 
-  current_node = Node('<incomplete_condition_statement>')
-
+  current_node = Node('<alternative_part>')
+  
   if current_lexem['lexem'] == 'ELSE':
     add_current_item(current_node)
     next_lexem()
@@ -303,9 +303,8 @@ def alternative_part(node):
       return True
   else:
     next = take_next_item()
-    if next['lexem'] == 'END':
-      node.add('<empty>')
-      return False
+    if current_lexem['lexem'] == 'ENDIF':
+      current_node.add(Node('<empty>'))
   node.add(current_node)
   return False
 
@@ -367,14 +366,14 @@ def label_list(node):
     add_current_item(current_node)
     next_lexem()
     if unsigned_integer(current_node):
-      print 'ERROR net unsigned_integer'
+      error_print('NOT_FOUND', 'unsigned_integer')
       return True
     if label_list(current_node):
       return True
     node.add(current_node)
   else:
     if not unsigned_integer(current_node):
-      print 'ERROR , in label list!'
+      error_print('NOT_FOUND')
       return True
     else:
       # print next_item
