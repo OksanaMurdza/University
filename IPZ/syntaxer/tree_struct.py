@@ -9,8 +9,11 @@ class bc:
   UNDERLINE = '\033[4m'
 
 def getMsgColor(value):
-  if 'code' in value:
-    return  bc.WARNING if value['code'] == 0 else bc.UNDERLINE
+  if value == '<empty>':
+    return bc.OKGREEN
+  if type(value) is dict:
+    return bc.OKBLUE
+
   return bc.HEADER
 
 class Node:
@@ -27,10 +30,13 @@ class Node:
     value = self.value
 
     msgColor = getMsgColor(self.value)
-    print '{}{}-|{}{}{}{}'.format(bc.OKBLUE, padding, bc.ENDC, msgColor, value, bc.ENDC)
+    if type(value) is dict:
+      print '{}{}-|{}{}{}{}'.format(bc.OKBLUE, padding, bc.ENDC, msgColor, value['lexem'], bc.ENDC)
+    else:
+      print '{}{}-|{}{}{}{}'.format(bc.OKBLUE, padding, bc.ENDC, msgColor, value, bc.ENDC)
+
     for node in self.children:
       node.view(level + 1)
 
 
-# error logger
 
