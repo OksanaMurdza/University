@@ -6,10 +6,13 @@ LABEL 12, 15;
 BEGIN
 
 
-1 : 
-  IF var1 = 23 
-    THEN 
-      5 : GOTO 14;
+  1 : 
+    IF var1 = 23 
+      THEN 
+        5 : GOTO 14;
+    ELSE
+        16 : GOTO 12;
+    
   ENDIF;
 
 END.
