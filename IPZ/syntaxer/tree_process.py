@@ -4,7 +4,7 @@ from tree_struct import Node, bc
 lexem_table = None
 current_lexem = None
 
-parse_tree = Node('<signal-program>')
+parse_tree = Node('<signal_program>')
 
 empty_authorized = ['ENDIF', 'END', 'ELSE']
 error_stack = []
@@ -61,7 +61,10 @@ def program(node):
         else:
           add_current_item(curr_node)
           parse_tree.add(curr_node)
-          parse_tree.view()
+          # view all parse tree
+          # parse_tree.view()
+          return parse_tree
+          
 
     else:
       error_print('NOT_FOUND', 'identifier')
@@ -173,7 +176,7 @@ def label_declarations(node):
 def statements_list(node):
   global statements_stack
   
-  current_node = Node('statements_list')
+  current_node = Node('<statements_list>')
   if not statement(current_node):
     statements_list(current_node)
     node.add(current_node)
@@ -194,7 +197,7 @@ def statements_list(node):
 def statement(node):
   global current_lexem
 
-  current_node = Node('statement')
+  current_node = Node('<statement>')
 
   if not unsigned_integer(current_node):
     if current_lexem['lexem'] != ':':
@@ -267,7 +270,7 @@ def condition_statement(node):
 
 def incomplete_condition_statement(node):
   global current_lexem
-  current_node = Node('<incomplete_condition_statement>')
+  current_node = Node('<incomplite_condition_statement>')
 
 
   if current_lexem['lexem'] != 'IF':
@@ -342,7 +345,7 @@ def parse(stack):
   lexem_table = stack
   current_lexem = lexem_table.pop()
 
-  program(current_lexem)
+  return program(current_lexem)
 
 
 def unsigned_integer(node):

@@ -1,7 +1,7 @@
 PROGRAM program1;
 
 
-LABEL 12, 15;
+LABEL 12, 12, 55, 5235;
 
 BEGIN
 
