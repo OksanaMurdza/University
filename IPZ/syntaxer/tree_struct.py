@@ -4,7 +4,7 @@ gramm_code = {
   '<block>': 3,
   '<variable_declarations>': 4, 
   '<label_declarations>': 5, 
-  '<declarations>': 6, 
+  '<declarations>': 4, 
   '<alternative_part>': 7,
   '<statements_list>': 8, 
   '<statement>': 9,
@@ -14,9 +14,9 @@ gramm_code = {
   '<variable_identifier>': 1,
   '<procedure_identifier>': 1,
   '<identifier>': 1,
-  '<unsigned_integer>': 1,
+  '<unsigned_integer>': 6,
   '<empty>': 0,
-  '<label_list>': 12
+  '<label_list>': 7
 }
 
 class bc:
@@ -58,12 +58,14 @@ class Node:
     for node in self.children:
       node.view(level + 1)
 
-  def get_node(self, node):
+  def get_node(self):
     return {
       'value': self.value,
       'child': self.children,
       'rule': get_gramm_rule(self.value)
     }
+  def get_node_value(self):
+    return self.value
 
 def get_gramm_rule(terminal):
   global gramm_code

@@ -16,7 +16,6 @@ argument_list = sys.argv[1:]
 
 if not len(argument_list):
   raise getopt.error('path is required! (-h or --help)')
-  sys.exit(2)
 
 
 for arg in argument_list:
