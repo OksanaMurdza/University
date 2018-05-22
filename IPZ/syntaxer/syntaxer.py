@@ -7,7 +7,7 @@ from tree_struct import Node
 
 def syntaxer(lexem_table, show = False):
   res = parse(lexem_table)
+  parsed_tree = res['parsed_tree']
   if show:
-    res.view()
-    
+    parsed_tree.view()
   return res

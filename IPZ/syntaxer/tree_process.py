@@ -45,19 +45,21 @@ def program(node):
       if current_lexem['lexem'] != ';':
         error_print('NOT_FOUND', ';')
         parse_tree.add(curr_node)
-        parse_tree.view()
-        return False
+        return parse_tree
+        # parse_tree.view()
+        # return False
       else:
         next_lexem()
         if block(curr_node):
           parse_tree.add(curr_node)
-          parse_tree.view()
-          return False
+          return parse_tree
+          # parse_tree.view()
+          # return False
         if current_lexem['lexem'] != '.':
           error_print('NOT_FOUND', '.')
           parse_tree.add(curr_node)
-          parse_tree.view()
-          return False
+          # parse_tree.view()
+          # return False
         else:
           add_current_item(curr_node)
           parse_tree.add(curr_node)
@@ -69,7 +71,8 @@ def program(node):
     else:
       error_print('NOT_FOUND', 'identifier')
       parse_tree.add(curr_node)
-      parse_tree.view()
+      # parse_tree.view()
+      return parse_tree
 
 def procedure_identifier(node):
   current_node = Node('<procedure_identifier>')
@@ -345,7 +348,10 @@ def parse(stack):
   lexem_table = stack
   current_lexem = lexem_table.pop()
 
-  return program(current_lexem)
+  return {
+    'parsed_tree': program(current_lexem),
+    'errors': error_stack
+  }
 
 
 def unsigned_integer(node):

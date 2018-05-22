@@ -1,7 +1,7 @@
-PROGRAM program1;
+PROGRAM pr1;
 
 
-LABEL 12, 132, 55, 5235;
+LABEL 1, 2, 4, 5, 3, 12;
 
 BEGIN
 
@@ -9,11 +9,38 @@ BEGIN
   1 : 
     IF var1 = 23 
       THEN 
-        5 : GOTO 14;
-    ELSE
-        16 : GOTO 12;
+        IF var2 = 45  
+          THEN
+            5 : GOTO 12;
+        ELSE
+          4 : GOTO 5;
     
+    ENDIF;
   ENDIF;
 
 END.
 
+(**
+PR1 SEGMENT
+
+?1:
+  cmp var1, 23
+  jne THEN_1
+  // ELSE
+  JMP ?2
+
+THEN_1:
+  JMP ?4
+
+?2:
+  JPM ?3
+
+?3: 
+  NOP
+
+?4: 
+  JMP ?5
+
+?5: 
+  NOP
+**)

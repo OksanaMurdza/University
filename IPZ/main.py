@@ -24,7 +24,11 @@ for arg in argument_list:
   elif arg in ['-s', '--syntaxer']:
     syntaxer(lexical('inputFile'), True)
   elif arg in ['-g', '--generator']:
-    code_gen(syntaxer(lexical('inputFile')))
+    res = syntaxer(lexical('inputFile'))
+    errors = res['errors']
+    parsed_tree = res['parsed_tree']
+    if not len(errors):
+      code_gen(parsed_tree)
   elif arg in ['-h', '--help']:
     print " -l, --lexer start lexer \n -s, --syntaxer start syntax \n -h, --help show help "
   
