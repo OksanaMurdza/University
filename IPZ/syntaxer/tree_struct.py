@@ -42,10 +42,12 @@ class Node:
     self.value = value
     self.children = []
     self.parent = None
+
   def add(self, node):
     assert isinstance(node, Node)
     node.parent = self
     self.children.append(node)
+
   def view(self, level = 0):
     padding = ''.join('- ' for i in range(level))
     value = self.value
@@ -64,6 +66,7 @@ class Node:
       'child': self.children,
       'rule': get_gramm_rule(self.value)
     }
+
   def get_node_value(self):
     return self.value
 

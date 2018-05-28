@@ -1,38 +1,15 @@
+from helpers import error_handle
 from tree_struct import get_gramm_rule
 
 labels_store = []
 condition = []
-semaphore = False
+label_flag = False
 
 
-
-def error_handle(f):
-  def wrapper(ast):
-    try:
-      return f(ast)
-    except Exception as inst:
-      # if inst == 'NOT_DEFINED_LABEL':
-      # print 'NOT_DEFINED_LABEL'
-      pass
-  return wrapper
-
-
-def create_label(name, goto):
-  global labels_id
-  global semaphore
-
-  label_name = '{}_{}'.format(name, labels_id)
-  labels_id += 1
-
-  return {
-    'label_name': label_name,
-    'label_content': "{} :\n\t JMP {}".format(label_name, goto)
-  }
-  
-
+@error_handle
 def code_gen(ast):
   global labels_store
-  global semaphore
+  global label_flag
 
   res = ast.get_node()
   rule = res['rule']
@@ -92,7 +69,9 @@ def code_gen(ast):
 
     if child['value'] == '<unsigned_integer>':
       label = code_gen(res['child'][0])
-      pair(label)
+      flag_label = pair(label)
+      if not label_flag:
+        print label
       res = code_gen(res['child'][2])
       return res
     
@@ -118,7 +97,7 @@ def code_gen(ast):
   if rule == 11:
     # condition_expression
     condition = code_gen(res['child'][1])
-    semaphore = True
+    label_flag = True
     # statement-list
     sec_child = code_gen(res['child'][3])
     print condition
@@ -160,15 +139,20 @@ def code_gen(ast):
 def get_child(node):
   return node['child'][0].get_node()
 
-def pair(var):
+def pair(label):
   global condition
-  global semaphore
+  global label_flag
+  global labels_store
 
-  if not semaphore:
+  if not label_flag:
     return
 
+
+  if label not in labels_store:
+    raise NameError('NOT_DEFINED_LABEL', label)
+
   if len(condition) < 2:
-    condition.append(var)
+    condition.append(label)
   
   if len(condition) == 2:
     buff = condition

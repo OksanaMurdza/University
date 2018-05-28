@@ -12,7 +12,7 @@ error_stack = []
 def add_current_item(current_node):
   global current_lexem
 
-  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code']}))
+  current_node.add(Node({'lexem': current_lexem['lexem'], 'code': current_lexem['code'], 'line': current_lexem['line'], 'pos': current_lexem['pos']}))
 
 
 def next_lexem():

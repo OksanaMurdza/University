@@ -9,39 +9,27 @@ BEGIN
   1 : 
     IF var1 = 23 
       THEN 
-        IF var2 = 45  
-          THEN
-            IF var3 = 13
-              THEN 6 : GOTO 13;
-        ELSE
-          4 : GOTO 5;
+        2 : GOTO 3;
+      ELSE
+        4 : GOTO 5;
     ENDIF;
-    ENDIF;
-  ENDIF;
-
-END.
+  END.
 
 (**
 PR1 SEGMENT
 
-?1:
+?1: 
   cmp var1, 23
-  jne THEN_1
-  // ELSE
-  JMP ?2
+  jne else_label_1
+  jmp 6
 
-THEN_1:
-  JMP ?4
+?6: 
+  jmp 13
 
-?2:
-  JPM ?3
+?else_label_1:
+  jmp ?4
 
-?3: 
-  NOP
+?4:
+  jmp 5
 
-?4: 
-  JMP ?5
-
-?5: 
-  NOP
 **)
