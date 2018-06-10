@@ -17,9 +17,8 @@ def parse(quote_page, topic):
 
   all_name_author = body.findAll('a', attrs={'class': 'fm-post__author-link fm-post__author-link_no-margin'})
   all_messages = body.findAll('div', attrs={'class': 'fm-post__message mq-xs-fm-post__message cmn-editor-content jq-selection-wrap'})
-  all_dates = body.findAll('span', attrs={'class': 'fm-post__date mq-xs-fm-post__date'})
-
-
+  all_dates = body.findAll('span', attrs={'class': 'fm-post__date mq-xs-fm-post__date hidden-xs'})
+  print all_name_author[0]
   comments = []
   for indx, msg in enumerate(all_messages):
     comment = {
