@@ -8,6 +8,11 @@ app = Flask(__name__)
 def api():
   result = []
   for comment in get():
-    result.append({'author': comment['author'], 'text': comment['text']})
+    result.append({
+      'author': comment['author'],
+      'text': comment['text'],
+      'topic': comment['topic'],
+      'date': comment['date']
+    })
 
   return jsonify(result)
