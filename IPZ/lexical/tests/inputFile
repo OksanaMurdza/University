@@ -1,21 +1,35 @@
-PROGRAM a1;
+PROGRAM pr1;
 
 
-LABEL 21, 12; 
+LABEL 1, 2, 4, 5, 3, 12;
 
 BEGIN
 
-1 : 
-  IF 1122 = 23 
-    THEN 
-      5 :
-            IF tt3 = 24
-              THEN
-                7 : GOTO 12;
-                ENDIF;
-  ELSE 
-    22 : GOTO 12;
-  ENDIF;
 
-END.
+  1 : 
+    IF var1 = 23 
+      THEN 
+        2 : GOTO 3;
+      ELSE
+        4 : GOTO 5;
+    ENDIF;
+  END.
 
+(**
+PR1 SEGMENT
+
+?1: 
+  cmp var1, 23
+  jne else_label_1
+  jmp 6
+
+?6: 
+  jmp 13
+
+?else_label_1:
+  jmp ?4
+
+?4:
+  jmp 5
+
+**)

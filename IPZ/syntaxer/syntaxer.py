@@ -1,14 +1,13 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import sys
 sys.path.append('../lexical')
 
 from lexical import lexical
 from tree_process import parse
+from tree_struct import Node
 
-lexem_table = lexical('inputFile')
-
-# print lexem_table
-parse(lexem_table)
-
+def syntaxer(lexem_table, show = False):
+  res = parse(lexem_table)
+  parsed_tree = res['parsed_tree']
+  if show:
+    parsed_tree.view()
+  return res
