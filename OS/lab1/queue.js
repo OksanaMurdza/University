@@ -16,7 +16,7 @@ class Queue {
   start() {
     switch (this.algorithmType) {
       case "RR":
-        const RoundRobin = new RR(this.process);
+        const RoundRobin = new RR(this.process, this.time);
         this.algorithmInstace = RoundRobin;
         this.algorithmInstace.start();
         break;
@@ -27,12 +27,12 @@ class Queue {
         break;
     }
 
-    return this.finish();
+    // return this.finish();
   }
 
-  async finish() {
-    return await timeOut(this.time, () => this.algorithmInstace.finish());
-  }
+  // async finish() {
+    // return await timeOut(this.time, () => this.algorithmInstace.finish());
+  // }
 }
 
 module.exports = Queue;

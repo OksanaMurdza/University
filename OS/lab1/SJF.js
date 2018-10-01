@@ -1,4 +1,4 @@
-const { generatorCreator } = require("./utils");
+const { generatorCreator } = require('./utils');
 const quietMode = false;
 
 class SJF {
@@ -25,7 +25,7 @@ class SJF {
     this.logger(result);
 
     if (result.done) {
-      this.process[this.currentProcessIndex]["status"] = true;
+      this.process[this.currentProcessIndex]['status'] = true;
       this.changeCurrentProcess();
     }
   }
@@ -65,7 +65,7 @@ class SJF {
   start() {
     this.fillProcess();
 
-    this.mainInterval = setInterval(() => this.SJFCircle(), 1 * 1000);
+    this.mainInterval = setInterval(() => this.SJFCircle(), 120);
   }
 }
 

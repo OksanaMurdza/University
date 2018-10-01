@@ -2,9 +2,9 @@ const { generatorCreator } = require("./utils");
 const quietMode = false;
 
 class RoundRobin {
-  constructor(process) {
+  constructor(process, time) {
     this.process = process;
-    this.quant = 20;
+    this.quant = time;
     this.processInstace = [];
 
     this.countTime = 0;
