@@ -1,13 +1,14 @@
-const { generatorCreator } = require('./utils');
+const { generatorCreator } = require("./utils");
 const quietMode = false;
 
 class SJF {
-  constructor(process) {
+  constructor(process, queueNumber) {
     this.process = process;
 
     this.currentProcessIndex = 0;
     this.processInstace = [];
     this.processInstaceSorted = [];
+    this.queueNumber = queueNumber;
 
     this.mainInterval = null;
   }
@@ -16,16 +17,17 @@ class SJF {
     const allDone = this.process.filter(({ status }) => !status).length;
     if (!allDone) {
       this.finish();
+      this.logger("finish");
       return;
     }
 
     const currentProcess = this.processInstace[this.currentProcessIndex];
     const result = currentProcess.next();
 
-    this.logger(result);
+    // this.logger(result);
 
     if (result.done) {
-      this.process[this.currentProcessIndex]['status'] = true;
+      this.process[this.currentProcessIndex]["status"] = true;
       this.changeCurrentProcess();
     }
   }
@@ -53,8 +55,13 @@ class SJF {
   }
 
   logger(text) {
-    if (!quietMode) {
-      console.log(`${JSON.stringify(text)}   SJF`);
+    if (!quietMode && text !== "finish") {
+      console.log(`${JSON.stringify(text)}   SJF | Queue ${this.queueNumber}`);
+    } else {
+      console.log("************");
+      console.log(`Queue ${this.queueNumber}`);
+      console.log(this.process);
+      console.log("************");
     }
   }
 

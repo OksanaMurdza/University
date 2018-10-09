@@ -2,10 +2,11 @@ const { generatorCreator } = require("./utils");
 const quietMode = false;
 
 class RoundRobin {
-  constructor(process, time) {
+  constructor(process, time, queueNumber) {
     this.process = process;
     this.quant = time;
     this.processInstace = [];
+    this.queueNumber = queueNumber;
 
     this.countTime = 0;
     this.currentProcess = 0;
@@ -52,6 +53,7 @@ class RoundRobin {
 
     if (isAllProcessFinished) {
       this.finish();
+      this.logger("finish");
       return;
     }
     // else branch
@@ -67,7 +69,7 @@ class RoundRobin {
 
     const process = this.processInstace[this.currentProcess];
     const result = process.next();
-    this.logger(result);
+    // this.logger(result);
     if (result.done) {
       this.process[this.currentProcess]["status"] = true;
       this.changeCurrentProcess();
@@ -75,8 +77,13 @@ class RoundRobin {
   }
 
   logger(text) {
-    if (!quietMode) {
-      console.log(`${JSON.stringify(text)}   RR`);
+    if (!quietMode && text !== "finish") {
+      console.log(`${JSON.stringify(text)}   RR | Queue ${this.queueNumber}`);
+    } else {
+      console.log("************");
+      console.log(`Queue ${this.queueNumber}`);
+      console.log(this.process);
+      console.log("************");
     }
   }
 
