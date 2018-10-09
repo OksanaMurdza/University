@@ -24,7 +24,7 @@ class SJF {
     const currentProcess = this.processInstace[this.currentProcessIndex];
     const result = currentProcess.next();
 
-    // this.logger(result);
+    this.logger(result);
 
     if (result.done) {
       this.process[this.currentProcessIndex]["status"] = true;

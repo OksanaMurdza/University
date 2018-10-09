@@ -69,7 +69,7 @@ class RoundRobin {
 
     const process = this.processInstace[this.currentProcess];
     const result = process.next();
-    // this.logger(result);
+    this.logger(result);
     if (result.done) {
       this.process[this.currentProcess]["status"] = true;
       this.changeCurrentProcess();

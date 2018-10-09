@@ -1,5 +1,5 @@
 const Queue = require("./queue");
-const { createProcess, timeOut } = require("./utils");
+const { createProcess } = require("./utils");
 
 const PROCESS = [25, 40, 77, 90, 22, 150];
 
@@ -36,10 +36,8 @@ const SECOND_QUEUE = new Queue(
 );
 const THIRD_QUEUE = new Queue(TASK_FOR_THIRD_QUEUE, "SJF", undefined, 3);
 
-async function init() {
-  await timeOut(TIME_FOR_FIRST_QUEUE, () => FIRST_QUEUE.start());
-  await timeOut(TIME_FOR_SECOND_QUEUE, () => SECOND_QUEUE.start());
-  await timeOut(Infinity, () => THIRD_QUEUE.start());
-}
+// gg prosto 02:15 nochi
 
-init();
+FIRST_QUEUE.start();
+SECOND_QUEUE.start();
+THIRD_QUEUE.start();
