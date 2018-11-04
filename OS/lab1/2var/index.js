@@ -25,7 +25,6 @@ class RR {
     this.process = [...newProcess];
 
     this.t().then(p => {
-      console.log(id, " * ", p);
       switch (id) {
         case 1:
           r2.addNewProcess(p);
@@ -43,6 +42,9 @@ class RR {
     const processLen = this.process.length;
     for (let i = 0; i < processLen; i++) {
       const r = await this.execute(this.getNewProcess);
+      if (r) {
+        console.log(`process RR: ${this.id}: `, r);
+      }
       buff.push(r);
     }
     this.process = [];
@@ -77,7 +79,6 @@ class SJF {
     if (!newProcess.length) return;
 
     if (!this.processSyncFlag) {
-      console.log("asd");
       this.processSyncBuffer = [...newProcess];
       return;
     }
@@ -85,7 +86,7 @@ class SJF {
     this.process = [...newProcess];
     this.t().then(d => {
       if (d.length) {
-        console.log("sjf ", d);
+        console.log(`process SJF: ${d}`);
       }
     });
   }
@@ -103,10 +104,14 @@ class SJF {
     for (let i = 0; i < processLen; i++) {
       const { process } = this.getNewProcess;
       const r = await this.execute(process);
-      if (this.processSyncBuffer.length) {
-        console.log("asd");
-      }
       buff.push(r);
+      if (this.processSyncBuffer.length) {
+        this.process = [...this.processSyncBuffer];
+        this.processSyncBuffer = [];
+        this.processSyncFlag = true;
+        this.t().then(d => console.log(`process SJF: ${d}`));
+        return buff;
+      }
     }
     this.processSyncFlag = true;
     return buff;
