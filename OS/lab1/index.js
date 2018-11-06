@@ -10,34 +10,41 @@ const TASK_FOR_FIRST_QUEUE = createProcess(
   PROCESS.filter(timeExecute => timeExecute <= TIME_FOR_FIRST_QUEUE)
 );
 
-const TASK_FOR_SECOND_QUEUE = createProcess(
-  PROCESS.filter(
-    timeExecute =>
-      timeExecute >= TIME_FOR_FIRST_QUEUE &&
-      timeExecute <= TIME_FOR_SECOND_QUEUE
-  )
-);
-
-const TASK_FOR_THIRD_QUEUE = createProcess(
-  PROCESS.filter(timeExecute => timeExecute > TIME_FOR_SECOND_QUEUE)
-);
-
 const FIRST_QUEUE = new Queue(
   TASK_FOR_FIRST_QUEUE,
   "RR",
   TIME_FOR_FIRST_QUEUE,
   1
 );
-const SECOND_QUEUE = new Queue(
-  TASK_FOR_SECOND_QUEUE,
-  "RR",
-  TIME_FOR_SECOND_QUEUE,
-  2
-);
-const THIRD_QUEUE = new Queue(TASK_FOR_THIRD_QUEUE, "SJF", undefined, 3);
 
-// gg prosto 02:15 nochi
+// const TASK_FOR_SECOND_QUEUE = createProcess(
+//   PROCESS.filter(
+//     timeExecute =>
+//       timeExecute >= TIME_FOR_FIRST_QUEUE &&
+//       timeExecute <= TIME_FOR_SECOND_QUEUE
+//   )
+// );
 
-FIRST_QUEUE.start();
-SECOND_QUEUE.start();
-THIRD_QUEUE.start();
+// const TASK_FOR_THIRD_QUEUE = createProcess(
+//   PROCESS.filter(timeExecute => timeExecute > TIME_FOR_SECOND_QUEUE)
+// );
+
+// const FIRST_QUEUE = new Queue(
+//   TASK_FOR_FIRST_QUEUE,
+//   "RR",
+//   TIME_FOR_FIRST_QUEUE,
+//   1
+// );
+// const SECOND_QUEUE = new Queue(
+//   TASK_FOR_SECOND_QUEUE,
+//   "RR",
+//   TIME_FOR_SECOND_QUEUE,
+//   2
+// );
+// const THIRD_QUEUE = new Queue(TASK_FOR_THIRD_QUEUE, "SJF", undefined, 3);
+
+// // gg prosto 02:15 nochi
+
+// FIRST_QUEUE.start();
+// SECOND_QUEUE.start();
+// THIRD_QUEUE.start();
