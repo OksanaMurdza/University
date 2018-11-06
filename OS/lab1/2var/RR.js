@@ -17,8 +17,6 @@ class RoundRobin {
   changeCurrentProcess() {
     let newProcess;
 
-    // takoe shoto :c
-    // take next not finished process
     this.process.forEach(({ status }, index) => {
       if (status || newProcess) return;
 
