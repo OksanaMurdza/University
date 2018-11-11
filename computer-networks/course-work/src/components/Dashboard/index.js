@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Stage, Layer, Circle } from "react-konva";
+import { Stage, Layer } from "react-konva";
 
 import Knots from "../Knots";
 
@@ -9,6 +9,13 @@ class Dashboard extends Component {
     const { addNewPoints } = this.props;
 
     addNewPoints({ x, y });
+  };
+
+  // need state manager :thinking:
+  editPointPosition = (position, index) => {
+    const { editPointPosition } = this.props;
+
+    editPointPosition(position, index);
   };
 
   render() {
@@ -21,7 +28,7 @@ class Dashboard extends Component {
         onClick={this.stageHandler}
       >
         <Layer>
-          <Knots points={points} />
+          <Knots points={points} editPointPosition={this.editPointPosition} />
         </Layer>
       </Stage>
     );

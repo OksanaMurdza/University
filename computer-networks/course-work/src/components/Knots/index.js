@@ -1,11 +1,12 @@
 import React, { Component, Fragment } from "react";
 import { Circle } from "react-konva";
 
+import { KnotsConsumer } from "../../utils/knotsContext";
+
 class Knots extends Component {
   state = {
-    radius: 70,
-    fill: "red",
-    stroke: "black"
+    radius: 40,
+    fill: "green"
   };
 
   circleHandler = e => {
