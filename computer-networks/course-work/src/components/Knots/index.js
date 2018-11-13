@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { Circle } from "react-konva";
+import { view } from "react-easy-state";
 
-import { KnotsConsumer } from "../../utils/knotsContext";
+import { store } from "../../utils/store";
 
 class Knots extends Component {
   state = {
@@ -25,9 +26,7 @@ class Knots extends Component {
   };
 
   handleDragEnd = (e, index) => {
-    const { editPointPosition } = this.props;
-
-    editPointPosition(e.evt, index);
+    store.editKnot(e.evt, index);
 
     e.target.to({
       duration: 0.5,
@@ -65,4 +64,4 @@ class Knots extends Component {
   }
 }
 
-export default Knots;
+export default view(Knots);

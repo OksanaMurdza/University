@@ -1,26 +1,18 @@
 import React, { Component } from "react";
 import { Stage, Layer } from "react-konva";
 
+import { view } from "react-easy-state";
+import { store } from "../../utils/store";
 import Knots from "../Knots";
 
 class Dashboard extends Component {
   stageHandler = e => {
     const { x, y } = e.evt;
-    const { addNewPoints } = this.props;
 
-    addNewPoints({ x, y });
-  };
-
-  // need state manager :thinking:
-  editPointPosition = (position, index) => {
-    const { editPointPosition } = this.props;
-
-    editPointPosition(position, index);
+    store.knots.push({ x, y });
   };
 
   render() {
-    const { points } = this.props;
-
     return (
       <Stage
         width={window.innerWidth}
@@ -28,11 +20,14 @@ class Dashboard extends Component {
         onClick={this.stageHandler}
       >
         <Layer>
-          <Knots points={points} editPointPosition={this.editPointPosition} />
+          <Knots
+            points={store.knots}
+            editPointPosition={this.editPointPosition}
+          />
         </Layer>
       </Stage>
     );
   }
 }
 
-export default Dashboard;
+export default view(Dashboard);
