@@ -11,7 +11,7 @@ class Knots extends Component {
   };
 
   circleHandler = e => {
-    e.cancelBubble = true;
+    // e.cancelBubble = true;
   };
 
   handleDragStart = e => {
