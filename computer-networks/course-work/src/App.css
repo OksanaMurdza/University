@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  position: relative;
+}
+
+.dashboard {
+  flex: 0 0 70%;
+  max-width: 70%;
+}
+
+.aside {
+  position: absolute;
+
+  width: 20%;
+  top: 0;
+  right: 0;
+
+  z-index: 100;
+}

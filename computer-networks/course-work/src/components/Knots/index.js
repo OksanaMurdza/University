@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Circle } from "react-konva";
+import { Circle, Text } from "react-konva";
 import { view } from "react-easy-state";
 
 import { store } from "../../utils/store";
@@ -45,18 +45,20 @@ class Knots extends Component {
       <Fragment>
         {points.map(({ x, y }, index) => {
           return (
-            <Circle
-              key={index.toString()}
-              onClick={this.circleHandler}
-              draggable
-              onDragStart={this.handleDragStart}
-              onDragEnd={e => this.handleDragEnd(e, index)}
-              x={x}
-              y={y}
-              radius={radius}
-              fill={fill}
-              stroke={stroke}
-            />
+            <Fragment key={index.toString()}>
+              <Circle
+                onClick={this.circleHandler}
+                draggable
+                onDragStart={this.handleDragStart}
+                onDragEnd={e => this.handleDragEnd(e, index)}
+                x={x}
+                y={y}
+                radius={radius}
+                fill={fill}
+                stroke={stroke}
+              />
+              <Text x={x} y={y} text={index + 1} fontSize={30} />
+            </Fragment>
           );
         })}
       </Fragment>

@@ -5,9 +5,9 @@ const ADD_LINE = "add line";
 
 function isPointInCircle(point, circleCenter) {
   const { x: xPoint, y: yPoint } = point;
-  const { x: xCircle, y: yCirlce } = circleCenter;
+  const { x: xCircle, y: yCircle } = circleCenter;
 
-  const r = (xPoint - xCircle) ** 2 + (yPoint - yCirlce) ** 2;
+  const r = (xPoint - xCircle) ** 2 + (yPoint - yCircle) ** 2;
 
   return Math.sqrt(r) <= 40;
 }
