@@ -5,24 +5,15 @@ import { store } from "./utils/store";
 
 import Dashboard from "./components/Dashboard";
 
-const ADD_NEW_KNOTS = "add new knots";
-const ADD_LINE = "add line";
-
 class App extends Component {
-  changeHandleMode = () => {
-    const { currentMode } = store;
-    store.currentMode =
-      currentMode === ADD_NEW_KNOTS ? ADD_LINE : ADD_NEW_KNOTS;
-  };
-
   render() {
+    const { currentMode } = store;
     return (
       <Fragment>
-        <button onClick={this.changeHandleMode}>Click</button>
-        <Dashboard
-          addNewPoints={this.addNewPoints}
-          editPointPosition={this.editPointPosition}
-        />
+        <button onClick={store.prettyView}>pretty view</button>
+        current mode: {currentMode}
+        <button onClick={store.toggleControlMode}>Change mode</button>
+        <Dashboard />
       </Fragment>
     );
   }
