@@ -18,6 +18,7 @@ export const store = createState.store({
   edges: [],
   currentMode: "add new knots",
 
+  edgesWithError: [],
   // getters
 
   get isCurrentModeIsKnots() {
@@ -35,7 +36,6 @@ export const store = createState.store({
     }
 
     store.edges.push(points);
-    console.log(store.edges);
   },
 
   editKnot(position, index) {
@@ -58,22 +58,28 @@ export const store = createState.store({
 
   prettyView() {
     const { edges, knots } = store;
-    const prettyEdges = edges.map(item => {
+    const edgesWithError = [];
+    const prettyEdges = edges.map((item, index) => {
       const [start, finish] = item;
       const prettyItem = [...item];
 
       const isStartInKnot = knots.find(knot => isPointInCircle(start, knot));
       if (isStartInKnot) {
         prettyItem[0] = { x: isStartInKnot.x, y: isStartInKnot.y };
+      } else {
+        edgesWithError.push(index);
       }
 
       const isFinishInKnot = knots.find(knot => isPointInCircle(finish, knot));
       if (isFinishInKnot) {
         prettyItem[1] = { x: isFinishInKnot.x, y: isFinishInKnot.y };
+      } else {
+        edgesWithError.push(index);
       }
 
       return prettyItem;
     });
+    store.edgesWithError = [...new Set(edgesWithError)];
     store.edges = prettyEdges;
   }
 });
