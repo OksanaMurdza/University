@@ -18,6 +18,8 @@ export const store = createState.store({
   edges: [],
   currentMode: "add new knots",
 
+  logs: [],
+
   edgesWithError: [],
   // getters
 
@@ -28,6 +30,7 @@ export const store = createState.store({
   // methods
   addKnot(x, y) {
     store.knots.push({ x, y });
+    store.logs.push({ type: "ADD_KNOT" });
   },
 
   addEdge(points) {
@@ -36,6 +39,7 @@ export const store = createState.store({
     }
 
     store.edges.push(points);
+    store.logs.push({ type: "ADD_EDGE" });
   },
 
   editKnot(position, index) {
@@ -47,6 +51,7 @@ export const store = createState.store({
     );
 
     store.knots = [...newKnotsValue];
+    store.logs.push({ type: "KNOT_EDIT" });
   },
 
   toggleControlMode() {

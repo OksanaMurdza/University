@@ -13,10 +13,14 @@ class Dashboard extends Component {
 
   stageHandler = e => {
     const { isCurrentModeIsKnots } = store;
-    const { x, y } = e.evt;
+    let { x, y } = e.evt;
+
+    // magic ))
+    y = y - 44;
+    x = x - 5;
 
     if (isCurrentModeIsKnots) {
-      store.knots.push({ x, y });
+      store.addKnot(x, y);
       this.setState({ edgeStart: "" });
       return;
     }

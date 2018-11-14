@@ -12,8 +12,13 @@
   position: absolute;
 
   width: 20%;
+  height: 100%;
   top: 0;
   right: 0;
+  padding: 10px 5px;
+
+  border-left: 1px dashed #333333;
+  background-color: white;
 
   z-index: 100;
 }
