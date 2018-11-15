@@ -1,13 +1,15 @@
 import React, { Component, Fragment } from "react";
-import { Circle, Text } from "react-konva";
+import { Text, Image } from "react-konva";
 import { view } from "react-easy-state";
 
 import { store } from "../../utils/store";
+import { KNOT_IMG_URL } from "../../utils/getImageUrl";
 
 class Knots extends Component {
   state = {
     radius: 40,
-    fill: "green"
+    fill: "green",
+    image: ""
   };
 
   circleHandler = e => {
@@ -37,8 +39,17 @@ class Knots extends Component {
     });
   };
 
+  componentDidMount() {
+    const image = new window.Image();
+    image.src = KNOT_IMG_URL;
+    image.onload = () => {
+      this.setState({
+        image: image
+      });
+    };
+  }
+
   render() {
-    const { radius, fill, stroke } = this.state;
     const { points } = this.props;
 
     return (
@@ -46,17 +57,18 @@ class Knots extends Component {
         {points.map(({ x, y }, index) => {
           return (
             <Fragment key={index.toString()}>
-              <Circle
+              <Image
+                image={this.state.image}
                 onClick={this.circleHandler}
                 draggable
                 onDragStart={this.handleDragStart}
                 onDragEnd={e => this.handleDragEnd(e, index)}
                 x={x}
                 y={y}
-                radius={radius}
-                fill={fill}
-                stroke={stroke}
+                offsetX={50}
+                offsetY={50}
               />
+
               <Text x={x} y={y} text={index + 1} fontSize={30} />
             </Fragment>
           );

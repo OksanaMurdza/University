@@ -24,11 +24,10 @@ class Edges extends Component {
     return (
       <Fragment>
         {edges.map((item, index) => {
-          const [start, finish] = item;
+          const { start, finish, weight } = item;
           return (
-            <Fragment>
+            <Fragment key={index.toString()}>
               <Line
-                key={index.toString()}
                 points={[start.x, start.y, finish.x, finish.y]}
                 stroke={this.getEdgesFill(index)}
                 strokeWidth={2}
@@ -36,10 +35,10 @@ class Edges extends Component {
                 dash={[25]}
               />
               <Text
-                fontSize={25}
-                text={"kek"}
+                fontSize={15}
+                text={`weight: ${weight}, index: ${index}`}
                 x={(start.x + finish.x) / 2}
-                y={start.y}
+                y={(start.y + finish.y) / 2}
               />
             </Fragment>
           );

@@ -30,7 +30,11 @@ class Dashboard extends Component {
     if (!edgeStart) {
       this.setState({ edgeStart: { x, y } });
     } else {
-      const newEdges = [{ x: edgeStart.x, y: edgeStart.y }, { x: x, y: y }];
+      const newEdges = {
+        start: { x: edgeStart.x, y: edgeStart.y },
+        finish: { x: x, y: y },
+        weight: 0
+      };
       store.addEdge(newEdges);
       this.setState({ edgeStart: "" });
     }

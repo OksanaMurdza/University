@@ -34,10 +34,6 @@ export const store = createState.store({
   },
 
   addEdge(points) {
-    if (!Array.isArray(points)) {
-      throw new Error("points - must be array");
-    }
-
     store.edges.push(points);
     store.logs.push({ type: "ADD_EDGE" });
   },
@@ -46,12 +42,21 @@ export const store = createState.store({
     const { knots } = store;
     const { x, y } = position;
 
-    const newKnotsValue = knots.map((item, knotIndex) =>
+    store.knots = knots.map((item, knotIndex) =>
       index === knotIndex ? { ...item, x: x, y: y } : { ...item }
     );
 
-    store.knots = [...newKnotsValue];
     store.logs.push({ type: "KNOT_EDIT" });
+  },
+
+  editEdge(index, weight) {
+    const { edges } = store;
+
+    this.edges = edges.map((item, edgeIndex) =>
+      index === edgeIndex ? { ...item, weight: weight } : { ...item }
+    );
+
+    store.logs.push({ type: "EDGE_EDIT" });
   },
 
   toggleControlMode() {
@@ -65,24 +70,23 @@ export const store = createState.store({
     const { edges, knots } = store;
     const edgesWithError = [];
     const prettyEdges = edges.map((item, index) => {
-      const [start, finish] = item;
-      const prettyItem = [...item];
+      const { start, finish } = item;
 
       const isStartInKnot = knots.find(knot => isPointInCircle(start, knot));
       if (isStartInKnot) {
-        prettyItem[0] = { x: isStartInKnot.x, y: isStartInKnot.y };
+        item.start = { x: isStartInKnot.x, y: isStartInKnot.y };
       } else {
         edgesWithError.push(index);
       }
 
       const isFinishInKnot = knots.find(knot => isPointInCircle(finish, knot));
       if (isFinishInKnot) {
-        prettyItem[1] = { x: isFinishInKnot.x, y: isFinishInKnot.y };
+        item.finish = { x: isFinishInKnot.x, y: isFinishInKnot.y };
       } else {
         edgesWithError.push(index);
       }
 
-      return prettyItem;
+      return item;
     });
     store.edgesWithError = [...new Set(edgesWithError)];
     store.edges = prettyEdges;
