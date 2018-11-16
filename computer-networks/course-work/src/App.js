@@ -15,7 +15,7 @@ class App extends Component {
       <div className="container">
         <div className="dashboard">
           <div className="dashboard__row">
-            <button onClick={store.prettyView}>pretty view</button>
+            {/* <button onClick={store.prettyView}>pretty view</button> */}
           </div>
           <div className="dashboard__row">
             current mode: {currentMode}

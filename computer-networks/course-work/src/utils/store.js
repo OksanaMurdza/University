@@ -9,7 +9,7 @@ function isPointInCircle(point, circleCenter) {
 
   const r = (xPoint - xCircle) ** 2 + (yPoint - yCircle) ** 2;
 
-  return Math.sqrt(r) <= 40;
+  return Math.sqrt(r) <= 60;
 }
 
 export const store = createState.store({
@@ -36,6 +36,7 @@ export const store = createState.store({
   addEdge(points) {
     store.edges.push(points);
     store.logs.push({ type: "ADD_EDGE" });
+    store.prettyView();
   },
 
   editKnot(position, index) {
@@ -71,17 +72,27 @@ export const store = createState.store({
     const edgesWithError = [];
     const prettyEdges = edges.map((item, index) => {
       const { start, finish } = item;
+      let knotIndex = "";
 
-      const isStartInKnot = knots.find(knot => isPointInCircle(start, knot));
+      const isStartInKnot = knots.find((knot, indexKnot) => {
+        knotIndex = indexKnot;
+        return isPointInCircle(start, knot);
+      });
+
       if (isStartInKnot) {
         item.start = { x: isStartInKnot.x, y: isStartInKnot.y };
+        item.startKnot = knotIndex;
       } else {
         edgesWithError.push(index);
       }
 
-      const isFinishInKnot = knots.find(knot => isPointInCircle(finish, knot));
+      const isFinishInKnot = knots.find((knot, indexKnot) => {
+        knotIndex = indexKnot;
+        return isPointInCircle(finish, knot);
+      });
       if (isFinishInKnot) {
         item.finish = { x: isFinishInKnot.x, y: isFinishInKnot.y };
+        item.finishKnot = knotIndex;
       } else {
         edgesWithError.push(index);
       }

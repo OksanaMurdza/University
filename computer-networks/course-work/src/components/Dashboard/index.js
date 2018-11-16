@@ -11,6 +11,17 @@ class Dashboard extends Component {
     edgeStart: ""
   };
 
+  createEdgeObject = (x, y) => {
+    const { edgeStart } = this.state;
+    return {
+      start: { x: edgeStart.x, y: edgeStart.y },
+      finish: { x: x, y: y },
+      weight: 0,
+      startKnot: null,
+      finishKnot: null
+    };
+  };
+
   stageHandler = e => {
     const { isCurrentModeIsKnots } = store;
     let { x, y } = e.evt;
@@ -27,17 +38,13 @@ class Dashboard extends Component {
 
     // add new line mode
     const { edgeStart } = this.state;
-    if (!edgeStart) {
-      this.setState({ edgeStart: { x, y } });
-    } else {
-      const newEdges = {
-        start: { x: edgeStart.x, y: edgeStart.y },
-        finish: { x: x, y: y },
-        weight: 0
-      };
-      store.addEdge(newEdges);
+
+    if (edgeStart) {
+      store.addEdge(this.createEdgeObject(x, y));
       this.setState({ edgeStart: "" });
+      return;
     }
+    this.setState({ edgeStart: { x, y } });
   };
 
   getEdgesInfo = () => {

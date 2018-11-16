@@ -34,8 +34,8 @@ class Knots extends Component {
       duration: 0.5,
       scaleX: 1,
       scaleY: 1,
-      shadowOffsetX: 5,
-      shadowOffsetY: 5
+      shadowOffsetX: 0,
+      shadowOffsetY: 0
     });
   };
 
@@ -59,8 +59,8 @@ class Knots extends Component {
             <Fragment key={index.toString()}>
               <Image
                 image={this.state.image}
-                onClick={this.circleHandler}
                 draggable
+                onClick={this.circleHandler}
                 onDragStart={this.handleDragStart}
                 onDragEnd={e => this.handleDragEnd(e, index)}
                 x={x}
