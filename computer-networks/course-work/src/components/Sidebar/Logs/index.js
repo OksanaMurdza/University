@@ -3,7 +3,8 @@ import { view } from "react-easy-state";
 
 import { store } from "../../../utils/store";
 
-const getNormalLogs = type => {
+const getNormalLogs = log => {
+  const { type, index, weight } = log;
   switch (type) {
     case "ADD_KNOT":
       return "Knot has been added";
@@ -12,7 +13,10 @@ const getNormalLogs = type => {
       return "Edge has been added";
 
     case "KNOT_EDIT":
-      return "Knot has been edited";
+      return `Knot ${index} has been edited`;
+
+    case "EDGE_EDIT":
+      return `Edge ${index} has been edited. New weight: ${weight} `;
 
     default:
       break;
@@ -27,7 +31,7 @@ class Logs extends Component {
         {logs.map((log, index) => {
           return (
             <div className="logs__item" key={index.toString()}>
-              {JSON.stringify(log)}
+              {getNormalLogs(log)}
             </div>
           );
         })}

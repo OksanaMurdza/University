@@ -46,7 +46,7 @@ export const store = createState.store({
       index === knotIndex ? { ...item, x: x, y: y } : { ...item }
     );
 
-    store.logs.push({ type: "KNOT_EDIT" });
+    store.logs.push({ type: "KNOT_EDIT", index: index });
   },
 
   editEdge(index, weight) {
@@ -56,7 +56,7 @@ export const store = createState.store({
       index === edgeIndex ? { ...item, weight: weight } : { ...item }
     );
 
-    store.logs.push({ type: "EDGE_EDIT" });
+    store.logs.push({ type: "EDGE_EDIT", index: index, weight: weight });
   },
 
   toggleControlMode() {
