@@ -49,6 +49,11 @@ class Knots extends Component {
     };
   }
 
+  test = e => {
+    console.log("dblkc");
+    e.cancelBubble = true;
+  };
+
   render() {
     const { points } = this.props;
 
@@ -69,7 +74,15 @@ class Knots extends Component {
                 offsetY={50}
               />
 
-              <Text x={x} y={y} text={index + 1} fontSize={30} />
+              <Text
+                onClick={this.test}
+                width={50}
+                height={50}
+                x={x}
+                y={y}
+                text={index + 1}
+                fontSize={30}
+              />
             </Fragment>
           );
         })}
