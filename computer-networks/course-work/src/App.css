@@ -22,3 +22,12 @@
 
   z-index: 100;
 }
+
+.sidebar,
+.sidebar__content {
+  height: 100%;
+}
+
+.sidebar__content-part {
+  height: 50%;
+}

@@ -49,9 +49,9 @@ class Knots extends Component {
     };
   }
 
-  test = e => {
-    console.log("dblkc");
+  setItemDetail = (e, index) => {
     e.cancelBubble = true;
+    store.setDetailsItem("knot", index);
   };
 
   render() {
@@ -75,7 +75,7 @@ class Knots extends Component {
               />
 
               <Text
-                onClick={this.test}
+                onClick={e => this.setItemDetail(e, index)}
                 width={50}
                 height={50}
                 x={x}

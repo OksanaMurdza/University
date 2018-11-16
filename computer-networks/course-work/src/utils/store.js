@@ -21,6 +21,9 @@ export const store = createState.store({
   logs: [],
 
   edgesWithError: [],
+
+  currentItemDetails: "",
+
   // getters
 
   get isCurrentModeIsKnots() {
@@ -65,6 +68,25 @@ export const store = createState.store({
 
     store.currentMode =
       currentMode === ADD_NEW_KNOTS ? ADD_LINE : ADD_NEW_KNOTS;
+  },
+
+  setDetailsItem(type, index) {
+    const { knots, edges } = store;
+
+    let detailsItem;
+
+    switch (type) {
+      case "knot":
+        detailsItem = knots[index];
+        break;
+      case "edge":
+        detailsItem = edges[index];
+        break;
+      default:
+        throw Error("edge || knot!");
+    }
+
+    store.currentItemDetails = { type: type, item: detailsItem };
   },
 
   prettyView() {

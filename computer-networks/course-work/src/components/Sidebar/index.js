@@ -3,6 +3,7 @@ import { view } from "react-easy-state";
 
 import Logs from "./Logs";
 import Table from "./Table";
+import ItemDetail from "./ItemDetail";
 
 const LOGS = "LOGS";
 const TABLE = "TABLE";
@@ -35,7 +36,12 @@ class Sidebar extends Component {
           <button onClick={this.toggleMode}>{title}</button>
         </div>
         <div className="sidebar__content">
-          {sidebarMode === LOGS ? <Logs /> : <Table />}
+          <div className="sidebar__content-part">
+            {sidebarMode === LOGS ? <Logs /> : <Table />}
+          </div>
+          <div className="sidebar__content-part">
+            <ItemDetail />
+          </div>
         </div>
       </div>
     );
