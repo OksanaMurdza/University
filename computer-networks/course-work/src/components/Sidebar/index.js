@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 
+// bulma component
+import { Button } from "react-bulma-components/full";
+
 import Logs from "./Logs";
 import Table from "./Table";
 import ItemDetail from "./ItemDetail";
@@ -33,7 +36,9 @@ class Sidebar extends Component {
     return (
       <div className="sidebar">
         <div className="sidebar__header">
-          <button onClick={this.toggleMode}>{title}</button>
+          <Button onClick={this.toggleMode} color={"success"}>
+            {title}
+          </Button>
         </div>
         <div className="sidebar__content">
           <div className="sidebar__content-part">

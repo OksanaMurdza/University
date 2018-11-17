@@ -20,11 +20,11 @@ class Edges extends Component {
     let edgeFinish = finish;
 
     if (startKnot !== null) {
-      edgeStart = knots.find((_, index) => startKnot === index);
+      edgeStart = knots.find((_, index) => +startKnot === +index);
     }
 
     if (finishKnot !== null) {
-      edgeFinish = knots.find((_, index) => finishKnot === index);
+      edgeFinish = knots.find((_, index) => +finishKnot === +index);
     }
 
     return [edgeStart.x, edgeStart.y, edgeFinish.x, edgeFinish.y];

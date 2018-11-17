@@ -4,7 +4,7 @@ import { view } from "react-easy-state";
 import { store } from "../../../utils/store";
 
 const getNormalLogs = log => {
-  const { type, index, weight } = log;
+  const { type, index, newValue } = log;
   switch (type) {
     case "ADD_KNOT":
       return "Knot has been added";
@@ -16,7 +16,7 @@ const getNormalLogs = log => {
       return `Knot ${index} has been edited`;
 
     case "EDGE_EDIT":
-      return `Edge ${index} has been edited. New weight: ${weight} `;
+      return `Edge ${index} has been edited. New data:  ${newValue}`;
 
     default:
       break;

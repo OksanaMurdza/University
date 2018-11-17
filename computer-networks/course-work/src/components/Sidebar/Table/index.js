@@ -8,17 +8,21 @@ class Table extends Component {
   render() {
     const { edges } = store;
     return (
-      <table>
+      <table className="table">
         <thead>
           <tr>
-            <th>edge index</th>
+            <th>edge</th>
             <th>weight</th>
+            <th>knot(1)</th>
+            <th>knot(2)</th>
           </tr>
         </thead>
         <tbody>
           {edges.map((item, index) => (
             <TableCell
               weight={item.weight}
+              startKnot={item.startKnot}
+              finishKnot={item.finishKnot}
               index={index}
               key={index.toString()}
             />

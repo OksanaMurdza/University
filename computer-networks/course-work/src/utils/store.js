@@ -34,12 +34,13 @@ export const store = createState.store({
   addKnot(x, y) {
     store.knots.push({ x, y });
     store.logs.push({ type: "ADD_KNOT" });
+    // store.prettyView();
   },
 
   addEdge(points) {
     store.edges.push(points);
     store.logs.push({ type: "ADD_EDGE" });
-    store.prettyView();
+    // store.prettyView();
   },
 
   editKnot(position, index) {
@@ -51,16 +52,23 @@ export const store = createState.store({
     );
 
     store.logs.push({ type: "KNOT_EDIT", index: index });
+    // store.prettyView();
   },
 
-  editEdge(index, weight) {
+  editEdge(index, object) {
     const { edges } = store;
 
-    this.edges = edges.map((item, edgeIndex) =>
-      index === edgeIndex ? { ...item, weight: weight } : { ...item }
+    let r = edges.map((item, edgeIndex) =>
+      index === edgeIndex ? { ...item, ...object } : { ...item }
     );
 
-    store.logs.push({ type: "EDGE_EDIT", index: index, weight: weight });
+    store.edges = r;
+    store.logs.push({
+      type: "EDGE_EDIT",
+      index: index,
+      newValue: JSON.stringify(object)
+    });
+    // store.prettyView();
   },
 
   toggleControlMode() {

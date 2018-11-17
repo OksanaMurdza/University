@@ -27,8 +27,8 @@ class Dashboard extends Component {
     let { x, y } = e.evt;
 
     // magic ))
-    y = y - 44;
-    x = x - 5;
+    y = y - 120;
+    x = x - 10;
 
     if (isCurrentModeIsKnots) {
       store.addKnot(x, y);

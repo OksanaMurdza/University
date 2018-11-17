@@ -5,6 +5,7 @@
   "dependencies": {
     "konva": "^2.5.1",
     "react": "^16.6.1",
+    "react-bulma-components": "^2.3.0",
     "react-dom": "^16.6.1",
     "react-easy-state": "^6.0.5",
     "react-konva": "^16.6.11",
