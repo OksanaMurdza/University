@@ -18,6 +18,12 @@ const getNormalLogs = log => {
     case "EDGE_EDIT":
       return `Edge ${index} has been edited. New data:  ${newValue}`;
 
+    case "EDGE_REMOVE":
+      return `Edge ${index} has been removed`;
+
+    case "KNOT_REMOVE":
+      return `Knot ${index} has been removed`;
+
     default:
       break;
   }

@@ -12,10 +12,6 @@ class Knots extends Component {
     image: ""
   };
 
-  circleHandler = e => {
-    // e.cancelBubble = true;
-  };
-
   handleDragStart = e => {
     e.target.setAttrs({
       shadowOffset: {

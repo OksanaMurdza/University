@@ -43,7 +43,12 @@ class TableCell extends Component {
         <td>{index}</td>
         <td>
           {editMode ? (
-            <input type="number" onBlur={e => this.saveNewValue(e, "weight")} />
+            <input
+              className="input"
+              placeholder="weight"
+              type="number"
+              onBlur={e => this.saveNewValue(e, "weight")}
+            />
           ) : (
             <div onClick={this.toggleEditMode}>{weight}</div>
           )}
@@ -51,6 +56,8 @@ class TableCell extends Component {
         <td>
           {editMode ? (
             <input
+              className="input"
+              placeholder="startKnot"
               type="number"
               onBlur={e => this.saveNewValue(e, "startKnot")}
             />
@@ -62,6 +69,8 @@ class TableCell extends Component {
           {editMode ? (
             <input
               type="number"
+              className="input"
+              placeholder="finishKnot"
               onBlur={e => this.saveNewValue(e, "finishKnot")}
             />
           ) : (

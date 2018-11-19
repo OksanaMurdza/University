@@ -12,6 +12,10 @@ function isPointInCircle(point, circleCenter) {
   return Math.sqrt(r) <= 60;
 }
 
+function removeEnt(entity, index) {
+  return entity.filter((item, i) => i !== index);
+}
+
 export const store = createState.store({
   // store
   knots: [],
@@ -94,7 +98,28 @@ export const store = createState.store({
         throw Error("edge || knot!");
     }
 
-    store.currentItemDetails = { type: type, item: detailsItem };
+    store.currentItemDetails = { type: type, item: detailsItem, index: index };
+  },
+
+  removeDetailsItem() {
+    store.currentItemDetails = { type: "", item: null, index: null };
+  },
+
+  removeEntity(entity, index) {
+    switch (entity) {
+      case "knot":
+        store.knots = removeEnt(store.knots, index);
+        store.logs.push({ type: "KNOT_REMOVE", index: index + 1 });
+        break;
+
+      case "edge":
+        store.edges = removeEnt(store.edges, index);
+        store.logs.push({ type: "EDGE_REMOVE", index: index + 1 });
+        break;
+
+      default:
+        throw Error("edge || knot!");
+    }
   },
 
   prettyView() {

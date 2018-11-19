@@ -30,6 +30,11 @@ class Edges extends Component {
     return [edgeStart.x, edgeStart.y, edgeFinish.x, edgeFinish.y];
   };
 
+  setItemDetail = (e, index) => {
+    e.cancelBubble = true;
+    store.setDetailsItem("edge", index);
+  };
+
   getEdgeLabelPosition = (coord, item) => {
     // ochen` krutoy kod, opasno)
     const r = this.getEdgesPoints(item);
@@ -63,11 +68,12 @@ class Edges extends Component {
                 points={this.getEdgesPoints(item)}
                 stroke={this.getEdgesFill(index)}
                 strokeWidth={2}
-                draggable
+                // draggable
                 dash={[25]}
               />
               <Text
                 fontSize={15}
+                onClick={e => this.setItemDetail(e, index)}
                 text={`weight: ${weight}, index: ${index}`}
                 x={this.getEdgeLabelPosition("x", item)}
                 y={this.getEdgeLabelPosition("y", item)}

@@ -1,0 +1,13 @@
+.item-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-detail__row {
+  display: flex;
+  align-items: center;
+}
+
+.item-detail__row button {
+  margin-left: 10px;
+}
